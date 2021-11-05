@@ -1,0 +1,5 @@
+# Creation de l'arbre MAVEN
+mvn archetype:generate
+mvn archetype:generate -DgroupId=goodnightkiss.training -DartifactId=sample-project
+# c'est cette ligne que j'ai lancé, en interactif des demandes annexes répondues par [ENTER] à chaque fois
+
