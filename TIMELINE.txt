@@ -3,3 +3,15 @@ mvn archetype:generate
 mvn archetype:generate -DgroupId=goodnightkiss.training -DartifactId=sample-project
 # c'est cette ligne que j'ai lancé, en interactif des demandes annexes répondues par [ENTER] à chaque fois
 
+
+# a la racine du depot, essayer
+mvn test
+# ca ne fonctionnera pas car il faut être à la racine du projet qui est un cran en dessous
+cd sample-project
+mvn test
+
+# on remarque le telechargement de tout un tas de package issus du depot central de maven
+# et au final le test par defaut qui passe
+# on essaie une deuxieme fois
+mvn test
+
