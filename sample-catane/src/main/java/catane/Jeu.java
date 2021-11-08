@@ -10,11 +10,11 @@ public class Jeu {
 
     public Integer tirage;
 
-    public Integer GetTirage() {
+    public Integer getTirage() {
         tirage = D1.getValeurDe() + D2.getValeurDe();
         return tirage;
     }
-    public void LanceLesDes() {
+    public void lanceLesDes() {
         D1.lanceDe();
         D2.lanceDe();
     }

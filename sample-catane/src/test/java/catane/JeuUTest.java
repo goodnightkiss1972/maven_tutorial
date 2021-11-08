@@ -10,8 +10,8 @@ public class JeuUTest {
         Jeu jeu = new Jeu();
         Integer i = 0;
         while (i < 100) {
-            jeu.LanceLesDes();
-            Integer tirage = jeu.GetTirage();
+            jeu.lanceLesDes();
+            Integer tirage = jeu.getTirage();
             assertThat(tirage).isBetween(2, 12);
             i++;
         }
