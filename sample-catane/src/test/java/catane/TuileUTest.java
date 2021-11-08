@@ -6,8 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class TuileUTest {
 
     @Test
-    public void creerTuileSansRien() {
+    public void creerTuileSansId() {
         assertThatThrownBy(() -> new Tuile(null, null))
+        .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Tuile(null, Terrain.DESERT))
         .isInstanceOf(IllegalArgumentException.class);
     }
 
