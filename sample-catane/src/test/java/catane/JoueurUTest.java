@@ -2,6 +2,7 @@ package catane;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JoueurUTest {
 
@@ -19,5 +20,13 @@ public class JoueurUTest {
     public void creerJoueurSansCouleur() {
         assertThatThrownBy(() -> new Joueur("Fabrice", null)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    public void creerJoueur() {
+        Joueur fabrice = new Joueur("fabrice", Couleur.BLEU);
+        assertThat(fabrice.nom).isEqualTo("fabrice");
+        assertThat(fabrice.couleur).isEqualTo(Couleur.BLEU);
+    }
+
 
 }
