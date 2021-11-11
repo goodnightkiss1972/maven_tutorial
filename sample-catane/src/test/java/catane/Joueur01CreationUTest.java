@@ -8,7 +8,7 @@ import enums.TypeJoueur;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JoueurUTest {
+public class Joueur01CreationUTest {
 
     @Test
     public void creerJoueurSansRien() {
