@@ -1,6 +1,9 @@
 package catane;
 
 import org.junit.jupiter.api.Test;
+
+import enums.Couleur;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 

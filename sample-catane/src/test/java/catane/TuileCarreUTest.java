@@ -1,6 +1,9 @@
 package catane;
 
 import org.junit.jupiter.api.Test;
+
+import enums.Terrain;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TuileCarreUTest {

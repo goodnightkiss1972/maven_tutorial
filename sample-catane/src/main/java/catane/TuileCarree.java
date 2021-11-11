@@ -1,5 +1,7 @@
 package catane;
 
+import enums.Terrain;
+
 public class TuileCarree {
     private Integer id;
     private Terrain terrain;

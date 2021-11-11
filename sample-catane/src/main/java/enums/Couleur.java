@@ -1,4 +1,4 @@
-package catane;
+package enums;
 
 public enum Couleur {
     BLEU, BLANC, ROUGE, VERT

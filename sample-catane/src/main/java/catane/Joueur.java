@@ -1,5 +1,7 @@
 package catane;
 
+import enums.Couleur;
+
 public class Joueur {
     String nom;
     Couleur couleur;
