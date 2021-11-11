@@ -2,13 +2,13 @@ package utils;
 
 import java.util.Random;
 
-public class De {
+public class De6Faces {
     
     public Integer nbrFaces;
     private Integer valeurTirage;
 
-    public De(Integer nbrFaces) {
-        this.nbrFaces = nbrFaces;
+    public De6Faces() {
+        this.nbrFaces = 6;
         this.lance();
     }
 
@@ -20,5 +20,4 @@ public class De {
         Random r = new Random();
         valeurTirage = 1 + r.nextInt(nbrFaces);
     }
-
 }

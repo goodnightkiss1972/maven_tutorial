@@ -11,7 +11,7 @@ public class JeuUTest {
         Integer i = 0;
         while (i < 100) {
             jeu.lanceLesDes();
-            Integer tirage = jeu.getTirage();
+            Integer tirage = jeu.getValeurDes();
             assertThat(tirage).isBetween(2, 12);
             i++;
         }

@@ -23,5 +23,8 @@
 hs_err_pid*
 
 # exclusion de target
-target/*
-
+sample-catane/target/*
+sample-project/target/*
+sample-project/.settings
+sample-project/.project
+sample-project/.classpath
