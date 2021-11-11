@@ -1,10 +1,10 @@
 package catane;
 
-public class Tuile {
+public class TuileCarree {
     private Integer id;
     private Terrain terrain;
 
-    public Tuile(Integer id, Terrain terrain) {
+    public TuileCarree(Integer id, Terrain terrain) {
         if  (id == null || terrain == null) {
             throw new IllegalArgumentException("La tuile ne peut etre cree sans un id ou un terrain !!");
         }

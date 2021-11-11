@@ -3,22 +3,22 @@ package catane;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class TuileUTest {
+public class TuileCarreUTest {
 
     @Test
     public void creerTuileSansId() {
-        assertThatThrownBy(() -> new Tuile(null, null))
+        assertThatThrownBy(() -> new TuileCarree(null, null))
         .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Tuile(null, Terrain.DESERT))
+        assertThatThrownBy(() -> new TuileCarree(null, Terrain.DESERT))
         .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void creerTuileMauvaisId() {
-        assertThatThrownBy(() -> new Tuile(0, Terrain.FORET))
+        assertThatThrownBy(() -> new TuileCarree(0, Terrain.FORET))
         .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> new Tuile(-10, Terrain.CHAMP))
+        assertThatThrownBy(() -> new TuileCarree(-10, Terrain.CHAMP))
         .isInstanceOf(IllegalArgumentException.class);
     }
 
