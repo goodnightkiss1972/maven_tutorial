@@ -3,8 +3,6 @@ package catane;
 import enums.Production;
 import enums.Terrain;
 
-import java.util.List;
-
 public class Tuile {
     
     private Integer id;
