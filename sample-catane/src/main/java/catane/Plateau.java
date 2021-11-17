@@ -26,6 +26,7 @@ public class Plateau {
         this.tailleVerticale = tailleVerticale;
         setTuiles();
         setPoints();
+        setPointsVoisinsParTuile();
     }
 
     public List<Tuile> getTuiles() {
@@ -57,6 +58,22 @@ public class Plateau {
         this.points = points;
     }
 
+    public void setPointsVoisinsParTuile() {
+        Integer i;
+        Integer ligne = 0;
+        Integer positionSurLigne = -1;
+        for (i = 0; i < (tailleHorizontale * tailleVerticale); i++) {
+            positionSurLigne++;
+            tuiles.get(i).setPointsVoisins(i + ligne);
+            tuiles.get(i).setPointsVoisins(i + ligne + 1);
+            tuiles.get(i).setPointsVoisins(i + ligne + 1 + tailleHorizontale);
+            tuiles.get(i).setPointsVoisins(i + ligne + 1 + tailleHorizontale + 1);
+            if (positionSurLigne == tailleHorizontale -1) { // si on arrive en bout de ligne
+                ligne++;
+                positionSurLigne = -1;
+            }
+        }
+    }
     
 
 }
