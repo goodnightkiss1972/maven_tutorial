@@ -26,7 +26,8 @@ public class Plateau {
         this.tailleVerticale = tailleVerticale;
         setTuiles();
         setPoints();
-        setPointsVoisinsParTuile();
+        setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
+        setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
     }
 
     public List<Tuile> getTuiles() {
@@ -58,11 +59,11 @@ public class Plateau {
         this.points = points;
     }
 
-    public void setPointsVoisinsParTuile() {
+    public void setPointsVoisinsDeTuile() {
         Integer i;
         Integer ligne = 0;
         Integer positionSurLigne = -1;
-        for (i = 0; i < (tailleHorizontale * tailleVerticale); i++) {
+        for (i = 0; i < this.tuiles.size(); i++) {
             positionSurLigne++;
             tuiles.get(i).setPointsVoisins(i + ligne);
             tuiles.get(i).setPointsVoisins(i + ligne + 1);
@@ -75,5 +76,16 @@ public class Plateau {
         }
     }
     
+    public void setTuilesVoisinesDePoint() {
+        Integer i, j;
+        for (i = 0; i < this.tuiles.size(); i++) {
+            System.out.println(i);
+            for (j = 0; j < this.tuiles.get(i).getPointsVoisins().size(); j++) {
+                System.out.println("##"+ j + "##" + this.tuiles.get(i).getPointsVoisins().get(j));
+                this.points.get(this.tuiles.get(i).getPointsVoisins().get(j)).addTuilesVoisines(i);
+            }
+        }
+    }
+
 
 }
