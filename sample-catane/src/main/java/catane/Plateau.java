@@ -79,9 +79,9 @@ public class Plateau {
     public void setTuilesVoisinesDePoint() {
         Integer i, j;
         for (i = 0; i < this.tuiles.size(); i++) {
-            System.out.println(i);
+            //System.out.println(i);
             for (j = 0; j < this.tuiles.get(i).getPointsVoisins().size(); j++) {
-                System.out.println("##"+ j + "##" + this.tuiles.get(i).getPointsVoisins().get(j));
+                //System.out.println("##"+ j + "##" + this.tuiles.get(i).getPointsVoisins().get(j));
                 this.points.get(this.tuiles.get(i).getPointsVoisins().get(j)).addTuilesVoisines(i);
             }
         }
