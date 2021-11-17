@@ -40,4 +40,11 @@ public class PlateauUTest {
         assertThat(p1.getTuiles().size()).isEqualTo(5*3);
         assertThat(p1.getTuiles().get(7).getTerrain()).isEqualTo(Terrain.DESERT);
     }
+
+    @Test
+    public void creerPlateauCorrectAvecPoints() {
+        Plateau p1 = new Plateau(5, 3);
+        assertThat(p1.getPoints().size()).isEqualTo(6*4);
+    }
+
 }
