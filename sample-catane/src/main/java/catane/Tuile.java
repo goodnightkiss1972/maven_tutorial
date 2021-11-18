@@ -8,27 +8,27 @@ import java.util.List;
 
 public class Tuile {
     
-    private Integer id;
+    private Integer idTuile;
     private Terrain terrain;
     private Production produit;
     private List<Integer> pointsVoisins;
 
-    public Tuile(Integer id, Terrain terrain, Production produit) {
-        if (id == null) {
+    public Tuile(Integer idTuile, Terrain terrain, Production produit) {
+        if (idTuile == null) {
             throw new IllegalArgumentException("La tuile doit avoir un identifiant !!");
         }
-        this.id = id;
+        this.idTuile = idTuile;
         this.terrain = terrain;
         this.produit = produit;
         pointsVoisins = new LinkedList<Integer>();
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdTuile() {
+        return idTuile;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer idTuile) {
+        this.idTuile = idTuile;
     }
 
     public Terrain getTerrain() {
@@ -54,7 +54,5 @@ public class Tuile {
     public void setPointsVoisins(Integer idPoint) {
         this.pointsVoisins.add(idPoint);
     }
-    
-    
-    
+   
 }

@@ -14,7 +14,7 @@ public class TuileUTest {
     @Test
     void creerTuileDeBase() {
         Tuile t1 = new Tuile(1, null, null);
-        assertThat(t1.getId()).isEqualTo(1);
+        assertThat(t1.getIdTuile()).isEqualTo(1);
     }
 
 }
