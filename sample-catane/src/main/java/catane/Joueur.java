@@ -158,6 +158,7 @@ public class Joueur {
             changeInventaire(-1, Production.BOIS);
             changeInventaire(-1, Production.LAINE);
             changeInventaire(-1, Production.MINERAI);
+            ajoutePoints(1);
             return true;
         }
         return false;

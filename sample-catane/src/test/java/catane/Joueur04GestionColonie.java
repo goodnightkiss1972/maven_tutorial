@@ -35,6 +35,7 @@ public class Joueur04GestionColonie {
         assertThat(j2.getInventaireLaine()).isEqualTo(0);
         assertThat(j2.getInventaireMinerai()).isEqualTo(2);
         assertThat(plateau.getPoints().get(5).getProprietaire()).isEqualTo(j2);
+        assertThat(j2.getPoints()).isEqualTo(1);
     }
 
     @Test
