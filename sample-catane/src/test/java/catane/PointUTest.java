@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import enums.Couleur;
+import enums.TypeJoueur;
+
 public class PointUTest {
 
     @Test
@@ -18,5 +21,19 @@ public class PointUTest {
         p1.addTuilesVoisines(0);
         p1.addTuilesVoisines(1);
         assertThat(p1.getTuilesVoisines().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void creerPointAvecProprietaireNul() {
+        Point p2 = new Point(5);
+        assertThatThrownBy(() -> p2.setProprietaire(null)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void creerPointAvecProprietaire() {
+        Point p2 = new Point(5);
+        Joueur j2 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.HUMAIN);
+        p2.setProprietaire(j2);
+        assertThat(p2.getProprietaire().getTypeJoueur()).isEqualTo(TypeJoueur.HUMAIN);
     }
 }

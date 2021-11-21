@@ -7,13 +7,15 @@ public class Point {
     
     private Integer idPoint;
     private List<Integer> tuilesVoisines;
-    
+    private Joueur proprietaire;
+
     public Point(Integer idPoint) {
         if (idPoint == null) {
             throw new IllegalArgumentException("La tuile doit avoir un identifiant !!");
         }
         this.idPoint = idPoint;
-        tuilesVoisines = new LinkedList<Integer>();
+        this.tuilesVoisines = new LinkedList<Integer>();
+        this.proprietaire = null;
     }
 
     public Integer getIdPoint() {
@@ -27,5 +29,16 @@ public class Point {
     public void addTuilesVoisines(Integer idTuile) {
         this.tuilesVoisines.add(idTuile);
     }  
-    
+        
+    public Joueur getProprietaire() {
+        return proprietaire;
+    }
+
+    public void setProprietaire(Joueur proprietaire) {
+        if (proprietaire == null) {
+            throw new IllegalArgumentException("Le proprietaire est obligatoire");
+        }
+        this.proprietaire = proprietaire;
+    }
+
 }

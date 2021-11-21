@@ -142,7 +142,7 @@ public class Joueur {
         }
     }
 
-    public boolean peutAcheterColonies() {
+    public boolean peutAcheterColonie() {
         if (getInventaireArgile() < 1 || getInventaireBois() < 1 || getInventaireLaine() < 1 || getInventaireMinerai() < 1) {
             return false;
         }
@@ -151,8 +151,24 @@ public class Joueur {
         }
     }
 
-    public boolean acheteColonies() {
+    public boolean acheteColonie(Point point) {
+        if (peutAcheterColonie() == true && point.getProprietaire() == null) {
+            point.setProprietaire(this);
+            changeInventaire(-1, Production.ARGILE);
+            changeInventaire(-1, Production.BOIS);
+            changeInventaire(-1, Production.LAINE);
+            changeInventaire(-1, Production.MINERAI);
+            return true;
+        }
         return false;
+    }
+
+    public Couleur getCouleur() {
+        return couleur;
+    }
+
+    public TypeJoueur getTypeJoueur() {
+        return typeJoueur;
     }
     
 }
