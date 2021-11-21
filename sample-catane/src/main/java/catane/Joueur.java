@@ -1,7 +1,10 @@
 package catane;
 
 import enums.Couleur;
+import enums.Production;
 import enums.TypeJoueur;
+import java.util.List;
+import java.util.LinkedList;
 
 public class Joueur {
     String nom;
@@ -13,6 +16,7 @@ public class Joueur {
     Integer inventaireLaine;
     Integer inventaireBle;
     Integer inventaireMinerai;
+    List<Integer> colonies;
 
     public Integer getPoints() {
         return points;
@@ -114,7 +118,41 @@ public class Joueur {
         this.inventaireLaine = 0;
         this.inventaireBle = 0;
         this.inventaireMinerai = 0;
+        colonies = new LinkedList<Integer>();
     }
 
+    public void changeInventaire(Integer quantite, Production ressource) {
+        if (quantite == null || ressource == null) {
+            throw new IllegalArgumentException("il faut une quantite et une ressource pour changer l'inventaire");
+        }
+        if (ressource == Production.ARGILE) {
+            setInventaireArgile(getInventaireArgile() + quantite);
+        }
+        if (ressource == Production.BLE) {
+            setInventaireBle(getInventaireBle() + quantite);
+        }
+        if (ressource == Production.BOIS) {
+            setInventaireBois(getInventaireBois() + quantite);
+        }
+        if (ressource == Production.LAINE) {
+            setInventaireLaine(getInventaireLaine() + quantite);
+        }
+        if (ressource == Production.MINERAI) {
+            setInventaireMinerai(getInventaireMinerai() + quantite);
+        }
+    }
+
+    public boolean peutAcheterColonies() {
+        if (getInventaireArgile() < 1 || getInventaireBois() < 1 || getInventaireLaine() < 1 || getInventaireMinerai() < 1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public boolean acheteColonies() {
+        return false;
+    }
     
 }
