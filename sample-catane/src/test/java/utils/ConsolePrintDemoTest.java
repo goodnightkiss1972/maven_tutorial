@@ -1,7 +1,5 @@
 package utils;
 
-import java.lang.ProcessBuilder.Redirect.Type;
-
 import org.junit.jupiter.api.Test;
 
 import catane.Joueur;
