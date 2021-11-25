@@ -42,7 +42,7 @@ public class Plateau {
         return this.tuiles;
     }
 
-    public void setTuiles() {
+    private void setTuiles() {
         List<Tuile> tuiles = new LinkedList<Tuile>();
         Integer i;
         for (i = 0; i < tailleHorizontale * tailleVerticale; i++) {
@@ -58,7 +58,7 @@ public class Plateau {
         return this.points;
     }
 
-    public void setPoints() {
+    private void setPoints() {
         List<Point> points = new LinkedList<Point>();
         Integer i;
         for (i = 0; i < (tailleHorizontale + 1) * (tailleVerticale +1); i++) {
@@ -67,7 +67,7 @@ public class Plateau {
         this.points = points;
     }
 
-    public void setPointsVoisinsDeTuile() {
+    private void setPointsVoisinsDeTuile() {
         Integer i;
         Integer ligne = 0;
         Integer positionSurLigne = -1;
@@ -84,7 +84,7 @@ public class Plateau {
         }
     }
     
-    public void setTuilesVoisinesDePoint() {
+    private void setTuilesVoisinesDePoint() {
         Integer i, j;
         for (i = 0; i < this.tuiles.size(); i++) {
             //System.out.println(i);
