@@ -1,6 +1,7 @@
 package utils;
 
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import catane.Joueur;
 import enums.Couleur;
@@ -32,6 +33,7 @@ public class ConsolePrintDemoTest {
         console.aLaLigne();
         console.printNombreEntier99(Couleur.ROUGE.getMarqueur(), 15);
         console.print(Couleur.BLEU.getMarqueur(), "A gauche on doit voir 15");
-
+        assertThatThrownBy(() -> console.printNombreEntier99(null, 100)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> console.printNombreEntier99(null, -1)).isInstanceOf(IllegalArgumentException.class);
     }
 }

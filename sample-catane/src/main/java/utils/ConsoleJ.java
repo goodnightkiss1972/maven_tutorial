@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.function.ToIntFunction;
-
 public class ConsoleJ {
     
     void print(String style, String chaine) {
@@ -25,11 +23,14 @@ public class ConsoleJ {
     }
 
     void printNombreEntier99(String style, Integer nombre) {
-        if (nombre < 10) {
+        if (nombre >= 0 && nombre < 10) {
             this.print(style, nombre + " ");
         }
-        else {
+        if (nombre >= 10 && nombre < 100) {
             this.print(style, nombre + "");
+        }
+        if (nombre < 0 || nombre >= 100) {
+            throw new IllegalArgumentException("Cette methode ne peut afficher qu'entre 0 et 99");
         }
     }
 
