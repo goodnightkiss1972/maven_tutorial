@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.function.ToIntFunction;
+
 public class ConsoleJ {
     
     void print(String style, String chaine) {
@@ -21,5 +23,15 @@ public class ConsoleJ {
     void aLaLigne() {
         System.out.println();
     }
+
+    void printNombreEntier99(String style, Integer nombre) {
+        if (nombre < 10) {
+            this.print(style, nombre + " ");
+        }
+        else {
+            this.print(style, nombre + "");
+        }
+    }
+
 
 }

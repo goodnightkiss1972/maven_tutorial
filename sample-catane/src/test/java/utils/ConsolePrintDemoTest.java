@@ -24,4 +24,14 @@ public class ConsolePrintDemoTest {
         console.aLaLigne();
     }
     
+    @Test
+    public void printDeNombres() {
+        ConsoleJ console = new ConsoleJ();
+        console.printNombreEntier99(Couleur.VERT.getMarqueur(), 5);
+        console.print(Couleur.BLEU.getMarqueur(), "A gauche on doit voir 5 et un espace");
+        console.aLaLigne();
+        console.printNombreEntier99(Couleur.ROUGE.getMarqueur(), 15);
+        console.print(Couleur.BLEU.getMarqueur(), "A gauche on doit voir 15");
+
+    }
 }
