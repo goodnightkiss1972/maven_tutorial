@@ -36,4 +36,12 @@ public class PointUTest {
         p2.setProprietaire(j2);
         assertThat(p2.getProprietaire().getTypeJoueur()).isEqualTo(TypeJoueur.HUMAIN);
     }
+
+    @Test
+    public void couleurDePoint() {
+        Joueur j1 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.HUMAIN);
+        Plateau p = new Plateau(5, 3);
+        p.getPoints().get(1).setProprietaire(j1);
+        assertThat(p.getPoints().get(1).getCouleur()).isEqualTo(j1.getCouleur());
+    }
 }

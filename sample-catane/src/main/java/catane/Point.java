@@ -3,6 +3,8 @@ package catane;
 import java.util.LinkedList;
 import java.util.List;
 
+import enums.Couleur;
+
 public class Point {
     
     private Integer idPoint;
@@ -39,6 +41,13 @@ public class Point {
             throw new IllegalArgumentException("Le proprietaire est obligatoire");
         }
         this.proprietaire = proprietaire;
+    }
+
+    public Couleur getCouleur() {
+        if (getProprietaire() == null) {
+            return Couleur.MAUVE;
+        }
+        return getProprietaire().getCouleur();
     }
 
 }

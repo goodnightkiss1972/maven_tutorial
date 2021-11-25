@@ -29,9 +29,17 @@ public class Plateau {
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
     }
+    
+    public Integer getTailleHorizontale() {
+        return tailleHorizontale;
+    }
+
+    public Integer getTailleVerticale() {
+        return tailleVerticale;
+    }
 
     public List<Tuile> getTuiles() {
-        return tuiles;
+        return this.tuiles;
     }
 
     public void setTuiles() {
@@ -47,7 +55,7 @@ public class Plateau {
     }
 
     public List<Point> getPoints() {
-        return points;
+        return this.points;
     }
 
     public void setPoints() {
@@ -88,6 +96,13 @@ public class Plateau {
     }
 
     public void dessinePlateau() {
+        // ConsoleJ console = new ConsoleJ();
+        // On veut dessiner les tuiles et les points qui sont leur sommets.
+        // on dessine d'abord la premiere ligne,
+        // puis ensuite autant de fois que de tuiles les bords gauche, bas et droits de chaque tuile.
+        // pour chaque point puis couple de points (qui representent les routes de catane),
+        // on ira chercher la couleur du joueur si le point ou le couple de points appartient a un joueur
+        // si le point ou le couple est libre on affichera en couleur par defaut.
         
     }
 

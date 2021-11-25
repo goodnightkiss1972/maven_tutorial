@@ -2,7 +2,7 @@ package utils;
 
 public class ConsoleJ {
     
-    void print(String style, String chaine) {
+    public void print(String style, String chaine) {
         if (style == null) {
             System.out.print(chaine);    
         } else {
@@ -10,7 +10,7 @@ public class ConsoleJ {
         }
     }
 
-    void println(String style, String chaine) {
+    public void println(String style, String chaine) {
         if (style == null) {
             System.out.println(chaine);    
         } else {
@@ -18,11 +18,11 @@ public class ConsoleJ {
         }
     }
 
-    void aLaLigne() {
+    public void aLaLigne() {
         System.out.println();
     }
 
-    void printNombreEntier99(String style, Integer nombre) {
+    public void printNombreEntier99(String style, Integer nombre) {
         if (nombre >= 0 && nombre < 10) {
             this.print(style, nombre + " ");
         }

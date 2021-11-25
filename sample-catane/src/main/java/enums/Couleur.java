@@ -6,7 +6,8 @@ public enum Couleur {
     BLEU(AnsiColors.ANSI_BLUE, AnsiColors.ANSI_BLUE_BACKGROUND + AnsiColors.ANSI_BLACK), 
     BLANC(AnsiColors.ANSI_WHITE, AnsiColors.ANSI_WHITE_BACKGROUND + AnsiColors.ANSI_BLACK), 
     ROUGE(AnsiColors.ANSI_RED, AnsiColors.ANSI_RED_BACKGROUND + AnsiColors.ANSI_BLACK), 
-    VERT(AnsiColors.ANSI_GREEN, AnsiColors.ANSI_GREEN_BACKGROUND + AnsiColors.ANSI_BLACK);
+    VERT(AnsiColors.ANSI_GREEN, AnsiColors.ANSI_GREEN_BACKGROUND + AnsiColors.ANSI_BLACK),
+    MAUVE(AnsiColors.ANSI_PURPLE, AnsiColors.ANSI_PURPLE_BACKGROUND + AnsiColors.ANSI_BLACK);
 
     private String stylo;
     private String marqueur;  
