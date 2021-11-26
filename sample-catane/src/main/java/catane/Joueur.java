@@ -3,8 +3,7 @@ package catane;
 import enums.Couleur;
 import enums.Production;
 import enums.TypeJoueur;
-import java.util.List;
-import java.util.LinkedList;
+import enums.TypePoint;
 
 public class Joueur {
     String nom;
@@ -16,7 +15,6 @@ public class Joueur {
     Integer inventaireLaine;
     Integer inventaireBle;
     Integer inventaireMinerai;
-    List<Integer> colonies;
 
     public Integer getPoints() {
         return points;
@@ -118,7 +116,6 @@ public class Joueur {
         this.inventaireLaine = 0;
         this.inventaireBle = 0;
         this.inventaireMinerai = 0;
-        colonies = new LinkedList<Integer>();
     }
 
     public void changeInventaire(Integer quantite, Production ressource) {
@@ -154,6 +151,7 @@ public class Joueur {
     public boolean acheteColonie(Point point) {
         if (peutAcheterColonie() == true && point.getProprietaire() == null) {
             point.setProprietaire(this);
+            point.setTypePoint(TypePoint.COLONIE);
             changeInventaire(-1, Production.ARGILE);
             changeInventaire(-1, Production.BOIS);
             changeInventaire(-1, Production.LAINE);

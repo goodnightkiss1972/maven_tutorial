@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import enums.Couleur;
 import enums.TypeJoueur;
+import enums.TypePoint;
 
 public class PointUTest {
 
@@ -30,11 +31,13 @@ public class PointUTest {
     }
 
     @Test
-    public void creerPointAvecProprietaire() {
+    public void creerPointAvecProprietaireEtType() {
         Point p2 = new Point(5);
         Joueur j2 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.HUMAIN);
         p2.setProprietaire(j2);
+        p2.setTypePoint(TypePoint.COLONIE);
         assertThat(p2.getProprietaire().getTypeJoueur()).isEqualTo(TypeJoueur.HUMAIN);
+        assertThat(p2.getTypePoint()).isEqualTo(TypePoint.COLONIE);
     }
 
     @Test
@@ -42,6 +45,7 @@ public class PointUTest {
         Joueur j1 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.HUMAIN);
         Plateau p = new Plateau(5, 3);
         p.getPoints().get(1).setProprietaire(j1);
+        p.getPoints().get(1).setTypePoint(TypePoint.COLONIE);
         assertThat(p.getPoints().get(1).getCouleur()).isEqualTo(j1.getCouleur());
     }
 }

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import enums.Couleur;
 import enums.Production;
 import enums.TypeJoueur;
+import enums.TypePoint;
 
 public class Joueur04GestionColonie {
 
@@ -35,6 +36,7 @@ public class Joueur04GestionColonie {
         assertThat(j2.getInventaireLaine()).isEqualTo(0);
         assertThat(j2.getInventaireMinerai()).isEqualTo(2);
         assertThat(plateau.getPoints().get(5).getProprietaire()).isEqualTo(j2);
+        assertThat(plateau.getPoints().get(5).getTypePoint()).isEqualTo(TypePoint.COLONIE);
         assertThat(j2.getPoints()).isEqualTo(1);
     }
 
