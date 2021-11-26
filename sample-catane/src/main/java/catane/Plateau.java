@@ -10,7 +10,7 @@ public class Plateau {
     private Integer tailleHorizontale;
     private Integer tailleVerticale;
     private List<Tuile> tuiles;
-    private List<Point> points;
+    private PointListe points;
 
     public Plateau(Integer tailleHorizontale, Integer tailleVerticale) {
         if (tailleHorizontale == null || tailleVerticale == null) {
@@ -25,7 +25,8 @@ public class Plateau {
         this.tailleHorizontale = tailleHorizontale;
         this.tailleVerticale = tailleVerticale;
         setTuiles();
-        setPoints();
+        points = new PointListe();
+        setPoints(points);
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
     }
@@ -54,12 +55,11 @@ public class Plateau {
         this.tuiles = tuiles;
     }
 
-    public List<Point> getPoints() {
+    public PointListe getPoints() {
         return this.points;
     }
 
-    private void setPoints() {
-        List<Point> points = new LinkedList<Point>();
+    private void setPoints(PointListe points) {
         Integer i;
         for (i = 0; i < (tailleHorizontale + 1) * (tailleVerticale +1); i++) {
             points.add(new Point(i));
