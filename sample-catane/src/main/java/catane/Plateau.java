@@ -13,6 +13,9 @@ public class Plateau {
     private Integer tailleVerticale;
     private List<Tuile> tuiles;
     private PointListe points;
+    private ConsoleJ console = new ConsoleJ();
+    private Couleur couleurFond = Couleur.MAUVE;
+
 
     public Plateau(Integer tailleHorizontale, Integer tailleVerticale) {
         if (tailleHorizontale == null || tailleVerticale == null) {
@@ -98,13 +101,6 @@ public class Plateau {
     }
 
     public void dessinePlateau() {
-        // On veut dessiner les tuiles et les points qui sont leur sommets.
-        // on dessine d'abord la premiere ligne,
-        // puis ensuite autant de fois que de tuiles les bords gauche, bas et droits de chaque tuile.
-        // pour chaque point puis couple de points (qui representent les routes de catane),
-        // on ira chercher la couleur du joueur si le point ou le couple de points appartient a un joueur
-        // si le point ou le couple est libre on affichera en couleur par defaut.
-        ConsoleJ console = new ConsoleJ();
         Integer i, j, espaces = 4;
         String style;
         for (i = 0; i < points.size(); i++) {
@@ -127,4 +123,68 @@ public class Plateau {
         console.aLaLigne();
     }
 
+    public void dessinePlateau2() {
+        Integer ligne = 0, departPoint = 0, departTuile = 0;
+        while (ligne < (tailleVerticale * 2)) {
+            if (ligne % 2 == 0) {
+                dessineLignePlateau(departPoint);
+                departPoint = departPoint + tailleHorizontale + 1;
+            }
+            else {
+                dessineColonnePlateau(departTuile);
+                departTuile = departTuile + tailleHorizontale;
+            }
+            ligne++;
+        }
+        dessineLignePlateau(departPoint);
+    }
+
+    private void dessineLignePlateau(Integer departPoint) {
+        Integer i;
+        for (i = departPoint; i <= this.tailleHorizontale + departPoint; i++) {
+            if (i == departPoint) {
+                dessinePoint(i);
+            }
+            else {
+                dessineSegmentHorizontal(i, i + 1);
+                dessinePoint(i);
+            }
+        }
+        console.aLaLigne();
+    }
+
+    private void dessineColonnePlateau(Integer departTuile) {
+        Integer i;
+        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+            dessineSegmentVertical(i, i + this.tailleVerticale);
+            console.print(couleurFond.getStylo(), "         ");
+        }
+        console.aLaLigne();
+
+        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+            dessineSegmentVertical(i, i + this.tailleVerticale);
+            if (i != this.tailleHorizontale + departTuile) {
+                console.print(couleurFond.getStylo(), "    " + console.nombreEntier99(couleurFond.getStylo(), i) + "   ");
+            }
+        }
+        console.aLaLigne();
+
+        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+            dessineSegmentVertical(i, i + this.tailleVerticale);
+            console.print(couleurFond.getStylo(), "         ");
+        }
+        console.aLaLigne();
+    }
+
+    private void dessinePoint(Integer idPoint) {
+        console.printNombreEntier99(couleurFond.getStylo(), idPoint);
+    }
+
+    private void dessineSegmentHorizontal(Integer depart, Integer arrivee) {
+        console.print(couleurFond.getStylo(), " ------ ");
+    }
+
+    private void dessineSegmentVertical(Integer depart, Integer arrivee) {
+        console.print(couleurFond.getStylo(), "|");
+    }
 }

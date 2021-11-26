@@ -43,4 +43,10 @@ public class Plateau04DessinUTest {
         j2.acheteColonie(plateau.getPoints().get(9));
         plateau.dessinePlateau();
     }
+
+    @Test
+    public void dessinePlateauPoints2() {
+        Plateau plateau = new Plateau(7, 5);
+        plateau.dessinePlateau2();
+    }
 }
