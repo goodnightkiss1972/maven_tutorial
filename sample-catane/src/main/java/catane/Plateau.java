@@ -3,7 +3,9 @@ package catane;
 import java.util.LinkedList;
 import java.util.List;
 
+import enums.Couleur;
 import enums.Terrain;
+import utils.ConsoleJ;
 
 public class Plateau {
     
@@ -96,14 +98,33 @@ public class Plateau {
     }
 
     public void dessinePlateau() {
-        // ConsoleJ console = new ConsoleJ();
         // On veut dessiner les tuiles et les points qui sont leur sommets.
         // on dessine d'abord la premiere ligne,
         // puis ensuite autant de fois que de tuiles les bords gauche, bas et droits de chaque tuile.
         // pour chaque point puis couple de points (qui representent les routes de catane),
         // on ira chercher la couleur du joueur si le point ou le couple de points appartient a un joueur
         // si le point ou le couple est libre on affichera en couleur par defaut.
-        
+        ConsoleJ console = new ConsoleJ();
+        Integer i, j, espaces = 4;
+        String style;
+        for (i = 0; i < points.size(); i++) {
+            if (i % (tailleHorizontale + 1) == 0 && i != 0) {
+                for (j = 0; j < espaces; j++) {
+                    console.aLaLigne();
+                }
+            }
+            if (points.getListe().get(i).getProprietaire() == null) {
+                style = Couleur.MAUVE.getStylo();
+            }
+            else {
+                style = points.getListe().get(i).getProprietaire().getCouleur().getStylo();
+            }
+            console.printNombreEntier99(style, points.getListe().get(i).getIdPoint());
+            for (j = 0; j < espaces; j++) {
+                console.print(null, "  ");
+            }
+        }
+        console.aLaLigne();
     }
 
 }

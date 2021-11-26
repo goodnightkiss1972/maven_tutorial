@@ -3,6 +3,7 @@ package catane;
 import org.junit.jupiter.api.Test;
 
 import enums.Couleur;
+import enums.Production;
 import enums.TypeJoueur;
 import utils.ConsoleJ;
 
@@ -23,5 +24,23 @@ public class Plateau04DessinUTest {
             console.printNombreEntier99(plateau.getPoints().get(i).getCouleur().getStylo(), i);
         }
         console.println(Couleur.BLEU.getMarqueur(), "le chiffre 1 apparait en blanc.");
+    }
+
+    @Test
+    public void dessinePlateauPoints() {
+        Plateau plateau = new Plateau(5, 3);
+        Joueur j1 = new Joueur("blanc", Couleur.BLANC, TypeJoueur.HUMAIN);
+        j1.changeInventaire(1, Production.ARGILE);
+        j1.changeInventaire(1, Production.BOIS);
+        j1.changeInventaire(1, Production.LAINE);
+        j1.changeInventaire(1, Production.MINERAI);
+        j1.acheteColonie(plateau.getPoints().get(2));
+        Joueur j2 = new Joueur("blanc", Couleur.ROUGE, TypeJoueur.HUMAIN);
+        j2.changeInventaire(1, Production.ARGILE);
+        j2.changeInventaire(1, Production.BOIS);
+        j2.changeInventaire(1, Production.LAINE);
+        j2.changeInventaire(1, Production.MINERAI);
+        j2.acheteColonie(plateau.getPoints().get(9));
+        plateau.dessinePlateau();
     }
 }
