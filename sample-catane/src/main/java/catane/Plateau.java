@@ -13,6 +13,7 @@ public class Plateau {
     private Integer tailleVerticale;
     private List<Tuile> tuiles;
     private PointListe points;
+
     private ConsoleJ console = new ConsoleJ();
     private Couleur couleurFond = Couleur.MAUVE;
 
@@ -101,29 +102,6 @@ public class Plateau {
     }
 
     public void dessinePlateau() {
-        Integer i, j, espaces = 4;
-        String style;
-        for (i = 0; i < points.size(); i++) {
-            if (i % (tailleHorizontale + 1) == 0 && i != 0) {
-                for (j = 0; j < espaces; j++) {
-                    console.aLaLigne();
-                }
-            }
-            if (points.getListe().get(i).getProprietaire() == null) {
-                style = Couleur.MAUVE.getStylo();
-            }
-            else {
-                style = points.getListe().get(i).getProprietaire().getCouleur().getStylo();
-            }
-            console.printNombreEntier99(style, points.getListe().get(i).getIdPoint());
-            for (j = 0; j < espaces; j++) {
-                console.print(null, "  ");
-            }
-        }
-        console.aLaLigne();
-    }
-
-    public void dessinePlateau2() {
         Integer ligne = 0, departPoint = 0, departTuile = 0;
         while (ligne < (tailleVerticale * 2)) {
             if (ligne % 2 == 0) {
