@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import enums.Couleur;
 import enums.Production;
 import enums.TypeJoueur;
+import enums.TypePoint;
 import utils.ConsoleJ;
 
 public class Plateau04DessinUTest {
@@ -46,7 +47,26 @@ public class Plateau04DessinUTest {
 
     @Test
     public void dessinePlateauPoints2() {
-        Plateau plateau = new Plateau(7, 5);
+        Plateau plateau = new Plateau(5, 3);
+        Joueur j1 = new Joueur("blanc", Couleur.BLANC, TypeJoueur.HUMAIN);
+        j1.changeInventaire(1, Production.ARGILE);
+        j1.changeInventaire(1, Production.BOIS);
+        j1.changeInventaire(1, Production.LAINE);
+        j1.changeInventaire(1, Production.MINERAI);
+        j1.acheteColonie(plateau.getPoints().get(2));
+        Joueur j2 = new Joueur("rouge", Couleur.ROUGE, TypeJoueur.HUMAIN);
+        j2.changeInventaire(1, Production.ARGILE);
+        j2.changeInventaire(1, Production.BOIS);
+        j2.changeInventaire(1, Production.LAINE);
+        j2.changeInventaire(1, Production.MINERAI);
+        j2.acheteColonie(plateau.getPoints().get(9));
+        Joueur j3 = new Joueur("bleu", Couleur.BLEU, TypeJoueur.HUMAIN);
+        plateau.getPoints().get(13).setProprietaire(j3);
+        plateau.getPoints().get(13).setTypePoint(TypePoint.VILLE);
+        plateau.getPoints().get(0).setProprietaire(j3);
+        plateau.getPoints().get(0).setTypePoint(TypePoint.COLONIE);
+        plateau.getPoints().get(23).setProprietaire(j2);
+        plateau.getPoints().get(23).setTypePoint(TypePoint.VILLE);
         plateau.dessinePlateau2();
     }
 }

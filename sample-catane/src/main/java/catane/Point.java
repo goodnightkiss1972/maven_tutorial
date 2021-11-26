@@ -53,6 +53,16 @@ public class Point {
         return getProprietaire().getCouleur();
     }
 
+    public String getStyle() {
+        if (getProprietaire() != null && getTypePoint() == TypePoint.COLONIE) {
+            return getProprietaire().getCouleur().getStylo();
+        }
+        if (getProprietaire() != null && getTypePoint() == TypePoint.VILLE) {
+            return getProprietaire().getCouleur().getMarqueur();
+        }
+        return Couleur.MAUVE.getStylo();
+    }
+
     public TypePoint getTypePoint() {
         return typePoint;
     }

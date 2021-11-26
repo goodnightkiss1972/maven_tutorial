@@ -46,6 +46,8 @@ public class PointUTest {
         Plateau p = new Plateau(5, 3);
         p.getPoints().get(1).setProprietaire(j1);
         p.getPoints().get(1).setTypePoint(TypePoint.COLONIE);
-        assertThat(p.getPoints().get(1).getCouleur()).isEqualTo(j1.getCouleur());
+        assertThat(p.getPoints().get(1).getStyle()).isEqualTo(j1.getCouleur().getStylo());
+        p.getPoints().get(1).setTypePoint(TypePoint.VILLE);
+        assertThat(p.getPoints().get(1).getStyle()).isEqualTo(j1.getCouleur().getMarqueur());
     }
 }

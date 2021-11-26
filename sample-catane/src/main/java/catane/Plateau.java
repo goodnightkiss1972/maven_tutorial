@@ -177,7 +177,7 @@ public class Plateau {
     }
 
     private void dessinePoint(Integer idPoint) {
-        console.printNombreEntier99(couleurFond.getStylo(), idPoint);
+        console.printNombreEntier99(getPoints().get(idPoint).getStyle(), idPoint);
     }
 
     private void dessineSegmentHorizontal(Integer depart, Integer arrivee) {
