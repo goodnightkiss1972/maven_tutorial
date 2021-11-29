@@ -1,6 +1,7 @@
 package catane;
 
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import enums.Couleur;
 import enums.Production;
@@ -53,6 +54,53 @@ public class Plateau04DessinUTest {
         plateau.getPoints().get(0).setTypePoint(TypePoint.COLONIE);
         plateau.getPoints().get(23).setProprietaire(j2);
         plateau.getPoints().get(23).setTypePoint(TypePoint.VILLE);
+        plateau.dessinePlateau();
+    }
+
+    @Test
+    public void chercheProprietaireSegment() {
+        Plateau plateau = new Plateau(5, 3);
+        Joueur j1 = new Joueur("Bleu", Couleur.BLEU, TypeJoueur.HUMAIN);
+        j1.changeInventaire(1, Production.ARGILE);
+        j1.changeInventaire(1, Production.BOIS);
+        Segment s1 = new Segment(0, 1, j1, plateau);
+        assertThat(j1.acheteRoute(plateau, s1)).isTrue();
+        assertThat(plateau.getProprietaireSegment(0, 1)).isEqualTo(j1);
+        j1.changeInventaire(1, Production.ARGILE);
+        j1.changeInventaire(1, Production.BOIS);
+        Segment s2 = new Segment(4, 5, j1, plateau);
+        assertThat(j1.acheteRoute(plateau, s2)).isTrue();
+
+        Joueur j2 = new Joueur("Blanc", Couleur.BLANC, TypeJoueur.HUMAIN);
+        j2.changeInventaire(1, Production.ARGILE);
+        j2.changeInventaire(1, Production.BOIS);
+        Segment s3 = new Segment(7, 8, j1, plateau);
+        assertThat(j2.acheteRoute(plateau, s3)).isTrue();
+        assertThat(plateau.getProprietaireSegment(7, 8)).isEqualTo(j2);
+        j2.changeInventaire(1, Production.ARGILE);
+        j2.changeInventaire(1, Production.BOIS);
+        Segment s4 = new Segment(9, 10, j1, plateau);
+        assertThat(j2.acheteRoute(plateau, s4)).isTrue();
+
+        Joueur j3 = new Joueur("Rouge", Couleur.ROUGE, TypeJoueur.HUMAIN);
+        j3.changeInventaire(1, Production.ARGILE);
+        j3.changeInventaire(1, Production.BOIS);
+        Segment s5 = new Segment(0, 6, j1, plateau);
+        assertThat(j3.acheteRoute(plateau, s5)).isTrue();
+        assertThat(plateau.getProprietaireSegment(0, 6)).isEqualTo(j3);
+        j3.changeInventaire(1, Production.ARGILE);
+        j3.changeInventaire(1, Production.BOIS);
+        Segment s6 = new Segment(16, 22, j3, plateau);
+        assertThat(j3.acheteRoute(plateau, s6)).isTrue();
+        j3.changeInventaire(1, Production.ARGILE);
+        j3.changeInventaire(1, Production.BOIS);
+        Segment s7 = new Segment(17, 23, j3, plateau);
+        assertThat(j3.acheteRoute(plateau, s7)).isTrue();
+        j3.changeInventaire(1, Production.ARGILE);
+        j3.changeInventaire(1, Production.BOIS);
+        Segment s8 = new Segment(8, 14, j3, plateau);
+        assertThat(j3.acheteRoute(plateau, s8)).isTrue();
+
         plateau.dessinePlateau();
     }
 }

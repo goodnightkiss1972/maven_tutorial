@@ -170,4 +170,22 @@ public class Joueur {
         return typeJoueur;
     }
     
+    public boolean peutAcheterRoute() {
+        if (getInventaireArgile() < 1 || getInventaireBois() < 1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    
+    public boolean acheteRoute(Plateau plateau, Segment segment) {
+        if (peutAcheterRoute() == true && plateau.getProprietaireSegment(segment.getIdPointA(), segment.getIdPointB()) == null) {
+            plateau.construitRoute(segment, this);
+            changeInventaire(-1, Production.ARGILE);
+            changeInventaire(-1, Production.BOIS);
+            return true;
+        }
+        return false;
+    }
 }

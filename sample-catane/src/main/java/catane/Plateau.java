@@ -1,5 +1,6 @@
 package catane;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Plateau {
     private Integer tailleVerticale;
     private List<Tuile> tuiles;
     private PointListe points;
+    private List<Segment> segments; // va contenir uniquement les segments occupés par un joueur (les routes)
 
     private ConsoleJ console = new ConsoleJ();
     private Couleur couleurFond = Couleur.MAUVE;
@@ -35,6 +37,7 @@ public class Plateau {
         setPoints(points);
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
+        segments = new ArrayList<Segment>();
     }
     
     public Integer getTailleHorizontale() {
@@ -110,7 +113,7 @@ public class Plateau {
             }
             else {
                 dessineColonnePlateau(departTuile);
-                departTuile = departTuile + tailleHorizontale;
+                departTuile = departTuile + tailleHorizontale + 1;
             }
             ligne++;
         }
@@ -124,7 +127,7 @@ public class Plateau {
                 dessinePoint(i);
             }
             else {
-                dessineSegmentHorizontal(i, i + 1);
+                dessineSegmentHorizontal(i - 1, i);
                 dessinePoint(i);
             }
         }
@@ -134,13 +137,13 @@ public class Plateau {
     private void dessineColonnePlateau(Integer departTuile) {
         Integer i;
         for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
-            dessineSegmentVertical(i, i + this.tailleVerticale);
+            dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             console.print(couleurFond.getStylo(), "         ");
         }
         console.aLaLigne();
 
         for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
-            dessineSegmentVertical(i, i + this.tailleVerticale);
+            dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             if (i != this.tailleHorizontale + departTuile) {
                 console.print(couleurFond.getStylo(), "    " + console.nombreEntier99(couleurFond.getStylo(), i) + "   ");
             }
@@ -148,7 +151,7 @@ public class Plateau {
         console.aLaLigne();
 
         for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
-            dessineSegmentVertical(i, i + this.tailleVerticale);
+            dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             console.print(couleurFond.getStylo(), "         ");
         }
         console.aLaLigne();
@@ -158,11 +161,99 @@ public class Plateau {
         console.printNombreEntier99(getPoints().get(idPoint).getStyle(), idPoint);
     }
 
-    private void dessineSegmentHorizontal(Integer depart, Integer arrivee) {
-        console.print(couleurFond.getStylo(), " ------ ");
+    public void dessineSegmentHorizontal(Integer depart, Integer arrivee) {
+        if (this.getProprietaireSegment(depart, arrivee) == null) {
+            console.print(couleurFond.getStylo(), " ------ ");
+        }
+        else {
+            console.print(couleurFond.getStylo(), " ");
+            console.print(this.getProprietaireSegment(depart, arrivee).getCouleur().getMarqueur(), "------");
+            console.print(couleurFond.getStylo(), " ");
+        }
     }
 
     private void dessineSegmentVertical(Integer depart, Integer arrivee) {
-        console.print(couleurFond.getStylo(), "|");
+        if (this.getProprietaireSegment(depart, arrivee) == null) {
+            console.print(couleurFond.getStylo(), "|");
+        }
+        else {
+            console.print(this.getProprietaireSegment(depart, arrivee).getCouleur().getMarqueur(), "|");
+        }
+    }
+
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public Joueur getProprietaireSegment(Integer idPointA, Integer idPointB) {
+        if (idPointA == null || idPointB == null) {
+            return null;
+        }
+        if (idPointA < 0 || idPointB < 0) {
+            return null;
+        }
+        if (getSegments().size() == 0) {
+            return null;
+        }
+        for (Integer i = 0; i < getSegments().size(); i++) {
+            if (getSegments().get(i).getIdPointA() == idPointA && getSegments().get(i).getIdPointB() == idPointB) {
+                return getSegments().get(i).getProprietaire();
+            }
+        }
+        return null;
+    }   
+
+    public Boolean construitRoute(Segment segment, Joueur joueur) {
+        segments.add(0, segment);
+        segments.get(0).setProprietaire(joueur);
+        return true;
+    }
+
+    public Boolean isSegmentValide(Integer idPointA, Integer idPointB) {
+        // cas ou le segment est manifestement invalide
+        if (idPointA < 0 || idPointA > (points.size() -1)) {
+            return false;
+        }
+        if (idPointB < 0 || idPointB > (points.size() -1)) {
+            return false;
+        }
+        if (idPointA == idPointB) {
+            return false;
+        }
+        if (idPointA > idPointB) {
+            return false;
+        }
+
+        ArrayList<Integer> bordGauche = new ArrayList<Integer>();
+        ArrayList<Integer> bordDroit = new ArrayList<Integer>();
+        ArrayList<Integer> bordBas = new ArrayList<Integer>();
+
+        for (int i = 0; i < tailleVerticale + 1; i++) {
+            bordGauche.add(i*(tailleHorizontale + 1));
+        }
+        for (int i = 0 ; i < bordGauche.size(); i++) {
+            bordDroit.add(bordGauche.get(i) + tailleHorizontale);
+        }
+        for (int i = tailleVerticale * (tailleHorizontale + 1) ; i < ((tailleVerticale + 1) * (tailleHorizontale +1)) ; i++) {
+            bordBas.add(i);
+        }
+
+        if (bordDroit.contains(idPointA) && idPointB == idPointA + 1) {
+            return false;
+        }
+        if (bordBas.contains(idPointA) && idPointB == idPointA + tailleHorizontale + 1) {
+            return false;
+        }
+
+        // les cas valides si on est pas invalide au préalable
+        if (idPointB == idPointA + 1) {
+            return true;
+        }
+        if (idPointB == idPointA + tailleHorizontale + 1) {
+            return true;
+        }
+        
+        // dans tout les autres cas on rejette
+        return false;
     }
 }
