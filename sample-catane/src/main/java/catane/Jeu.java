@@ -10,13 +10,13 @@ public class Jeu {
 
     public Integer valeurDes;
 
-    public Integer getValeurDes() {
-        valeurDes = D1.getValeurTirage() + D2.getValeurTirage();
+    public Integer getTirageDes() {
+        valeurDes = D1.getTirage() + D2.getTirage();
         return valeurDes;
     }
     public void lanceLesDes() {
-        D1.lance();
-        D2.lance();
+        D1.setTirage();
+        D2.setTirage();
     }
 
 }

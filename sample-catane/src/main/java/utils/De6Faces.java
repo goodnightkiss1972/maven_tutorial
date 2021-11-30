@@ -5,19 +5,27 @@ import java.util.Random;
 public class De6Faces {
     
     public Integer nbrFaces;
-    private Integer valeurTirage;
+    private Integer tirage;
+    private Random rnd;
 
     public De6Faces() {
         this.nbrFaces = 6;
-        this.lance();
+        rnd = new Random();
+        this.setTirage();
     }
 
-    public Integer getValeurTirage() {
-        return this.valeurTirage;
+    public De6Faces(long seed) {
+        this.nbrFaces = 6;
+        rnd = new Random(seed);
+        this.setTirage();
     }
 
-    public void lance() {
-        Random r = new Random();
-        valeurTirage = 1 + r.nextInt(nbrFaces);
+    public Integer getTirage() {
+        return this.tirage;
     }
+
+    public void setTirage() {
+        this.tirage = 1 + rnd.nextInt(nbrFaces);
+    }
+
 }
