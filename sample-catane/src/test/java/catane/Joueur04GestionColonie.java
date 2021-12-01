@@ -25,7 +25,7 @@ public class Joueur04GestionColonie {
     @Test
     public void acheteUneColoniesOK() {
         Joueur j2 = new Joueur("eric", Couleur.BLEU, TypeJoueur.HUMAIN);
-        Plateau plateau = new Plateau(7, 5);
+        Plateau plateau = new Plateau(7, 5, null);
         j2.changeInventaire(1, Production.ARGILE);
         j2.changeInventaire(2, Production.BOIS);
         j2.changeInventaire(1, Production.LAINE);
@@ -44,7 +44,7 @@ public class Joueur04GestionColonie {
     public void nePeutPasAcheterColonieOccupee() {
         Joueur j3 = new Joueur("franck", Couleur.ROUGE, TypeJoueur.HUMAIN);
         Joueur j4 = new Joueur("michel", Couleur.BLEU, TypeJoueur.IA);
-        Plateau plateau = new Plateau(7, 5);
+        Plateau plateau = new Plateau(7, 5, null);
         j3.changeInventaire(1, Production.ARGILE);
         j3.changeInventaire(2, Production.BOIS);
         j3.changeInventaire(1, Production.LAINE);

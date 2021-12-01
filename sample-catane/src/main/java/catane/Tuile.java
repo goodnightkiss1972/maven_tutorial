@@ -11,6 +11,7 @@ public class Tuile {
     private Integer idTuile;
     private Terrain terrain;
     private Production produit;
+    private Integer jeton;
     private List<Integer> pointsVoisins;
 
     public Tuile(Integer idTuile, Terrain terrain, Production produit) {
@@ -20,6 +21,7 @@ public class Tuile {
         this.idTuile = idTuile;
         this.terrain = terrain;
         this.produit = produit;
+
         pointsVoisins = new LinkedList<Integer>();
     }
 
@@ -27,7 +29,7 @@ public class Tuile {
         return idTuile;
     }
 
-    public void setId(Integer idTuile) {
+    public void setIdTuile(Integer idTuile) {
         this.idTuile = idTuile;
     }
 
@@ -54,5 +56,15 @@ public class Tuile {
     public void setPointsVoisins(Integer idPoint) {
         this.pointsVoisins.add(idPoint);
     }
-   
+
+    public Integer getJeton() {
+        return jeton;
+    }
+
+    public void setJeton(Integer jeton) {
+        this.jeton = jeton;
+    }
+
+    
+    
 }

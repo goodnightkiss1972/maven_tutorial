@@ -43,7 +43,7 @@ public class PointUTest {
     @Test
     public void couleurDePoint() {
         Joueur j1 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.HUMAIN);
-        Plateau p = new Plateau(5, 3);
+        Plateau p = new Plateau(5, 3, null);
         p.getPoints().get(1).setProprietaire(j1);
         p.getPoints().get(1).setTypePoint(TypePoint.COLONIE);
         assertThat(p.getPoints().get(1).getStyle()).isEqualTo(j1.getCouleur().getStylo());

@@ -8,7 +8,7 @@ public class Plateau03PointsEtTuilesVoisinesUTest {
 
     @Test
     public void creerPlateau5x3CorrectAvecTuilesVoisinesLigne0() {
-        Plateau p1 = new Plateau(5, 3);
+        Plateau p1 = new Plateau(5, 3, null);
         assertThat(p1.getPoints().get(0).getTuilesVoisines()).contains(0);
         assertThat(p1.getPoints().get(1).getTuilesVoisines()).contains(0, 1);
         assertThat(p1.getPoints().get(2).getTuilesVoisines()).contains(1, 2);
@@ -19,7 +19,7 @@ public class Plateau03PointsEtTuilesVoisinesUTest {
 
     @Test
     public void creerPlateau5x3CorrectAvecTuilesVoisinesLigne1() {
-        Plateau p1 = new Plateau(5, 3);
+        Plateau p1 = new Plateau(5, 3, null);
         assertThat(p1.getPoints().get(6).getTuilesVoisines()).contains(0, 5);
         assertThat(p1.getPoints().get(7).getTuilesVoisines()).contains(0, 1, 5, 6);
         assertThat(p1.getPoints().get(8).getTuilesVoisines()).contains(1, 2, 6, 7);
@@ -30,7 +30,7 @@ public class Plateau03PointsEtTuilesVoisinesUTest {
 
     @Test
     public void creerPlateau5x3CorrectAvecTuilesVoisinesLigne2() {
-        Plateau p1 = new Plateau(5, 3);
+        Plateau p1 = new Plateau(5, 3, null);
         assertThat(p1.getPoints().get(12).getTuilesVoisines()).contains(5, 10);
         assertThat(p1.getPoints().get(13).getTuilesVoisines()).contains(5, 6, 10, 11);
         assertThat(p1.getPoints().get(17).getTuilesVoisines()).contains(9, 14);
@@ -38,7 +38,7 @@ public class Plateau03PointsEtTuilesVoisinesUTest {
 
     @Test
     public void creerPlateau5x3CorrectAvecTuilesVoisinesLigne3() {
-        Plateau p1 = new Plateau(5, 3);
+        Plateau p1 = new Plateau(5, 3, null);
         assertThat(p1.getPoints().get(18).getTuilesVoisines()).contains(10);
         assertThat(p1.getPoints().get(20).getTuilesVoisines()).contains(11, 12);
         assertThat(p1.getPoints().get(23).getTuilesVoisines()).contains(14);

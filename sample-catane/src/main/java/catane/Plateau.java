@@ -3,6 +3,8 @@ package catane;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.OptionalLong;
+import java.util.Random;
 
 import enums.Couleur;
 import enums.Terrain;
@@ -12,6 +14,7 @@ public class Plateau {
     
     private Integer tailleHorizontale;
     private Integer tailleVerticale;
+    private OptionalLong optionSeed;
     private List<Tuile> tuiles;
     private PointListe points;
     private List<Segment> segments; // va contenir uniquement les segments occupés par un joueur (les routes)
@@ -20,7 +23,7 @@ public class Plateau {
     private Couleur couleurFond = Couleur.MAUVE;
 
 
-    public Plateau(Integer tailleHorizontale, Integer tailleVerticale) {
+    public Plateau(Integer tailleHorizontale, Integer tailleVerticale, OptionalLong optionSeed) {
         if (tailleHorizontale == null || tailleVerticale == null) {
             throw new IllegalArgumentException("Le plateau doit être au minimum de 3x3 !");
         }
@@ -32,12 +35,14 @@ public class Plateau {
         }
         this.tailleHorizontale = tailleHorizontale;
         this.tailleVerticale = tailleVerticale;
+        this.optionSeed = optionSeed;
         setTuiles();
         points = new PointListe();
         setPoints(points);
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
         segments = new ArrayList<Segment>();
+        setJetons();
     }
     
     public Integer getTailleHorizontale() {
@@ -105,15 +110,16 @@ public class Plateau {
     }
 
     public void dessinePlateau() {
-        Integer ligne = 0, departPoint = 0, departTuile = 0;
+        Integer ligne = 0, departPoint = 0, departTuile = 0, departSegment = 0;
         while (ligne < (tailleVerticale * 2)) {
             if (ligne % 2 == 0) {
                 dessineLignePlateau(departPoint);
                 departPoint = departPoint + tailleHorizontale + 1;
             }
             else {
-                dessineColonnePlateau(departTuile);
-                departTuile = departTuile + tailleHorizontale + 1;
+                dessineColonnePlateau(departTuile, departSegment);
+                departTuile = departTuile + tailleHorizontale;
+                departSegment = departSegment + tailleHorizontale + 1;
             }
             ligne++;
         }
@@ -134,23 +140,24 @@ public class Plateau {
         console.aLaLigne();
     }
 
-    private void dessineColonnePlateau(Integer departTuile) {
+    private void dessineColonnePlateau(Integer departTuile, Integer departSegment) {
         Integer i;
-        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+        for (i = departSegment; i <= this.tailleHorizontale + departSegment; i++) {
             dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             console.print(couleurFond.getStylo(), "         ");
         }
         console.aLaLigne();
 
         for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
-            dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             if (i != this.tailleHorizontale + departTuile) {
-                console.print(couleurFond.getStylo(), "    " + console.nombreEntier99(couleurFond.getStylo(), i) + "   ");
+                console.print(couleurFond.getStylo(), "|    ");
+                console.printNombreEntier99(couleurFond.getMarqueur(), tuiles.get(i).getJeton());
+                console.print(couleurFond.getStylo(), "   ");
             }
         }
         console.aLaLigne();
 
-        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+        for (i = departSegment; i <= this.tailleHorizontale + departSegment; i++) {
             dessineSegmentVertical(i, i + this.tailleHorizontale + 1);
             console.print(couleurFond.getStylo(), "         ");
         }
@@ -173,6 +180,7 @@ public class Plateau {
     }
 
     private void dessineSegmentVertical(Integer depart, Integer arrivee) {
+        //System.out.print(depart + "#" + arrivee);
         if (this.getProprietaireSegment(depart, arrivee) == null) {
             console.print(couleurFond.getStylo(), "|");
         }
@@ -255,5 +263,19 @@ public class Plateau {
         
         // dans tout les autres cas on rejette
         return false;
+    }
+
+    private void setJetons() {
+        Random rnd;
+        if (optionSeed == null) {
+            rnd = new Random();
+        }
+        else {
+            long localSeed = optionSeed.getAsLong();
+            rnd = new Random(localSeed);
+        }
+        for (int i = 0; i < tailleHorizontale * tailleVerticale; i++) {
+            tuiles.get(i).setJeton(2 + rnd.nextInt(11));
+        }
     }
 }

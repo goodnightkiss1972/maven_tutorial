@@ -14,7 +14,7 @@ public class Plateau04DessinUTest {
     @Test
     public void dessineUneLigne() {
         ConsoleJ console = new ConsoleJ();
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         Integer i;
         for (i = 0; i < plateau.getTailleHorizontale() + 1; i++) {
             console.printNombreEntier99(plateau.getPoints().get(i).getStyle(), i);
@@ -34,7 +34,7 @@ public class Plateau04DessinUTest {
 
     @Test
     public void dessinePlateau() {
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         Joueur j1 = new Joueur("blanc", Couleur.BLANC, TypeJoueur.HUMAIN);
         j1.changeInventaire(1, Production.ARGILE);
         j1.changeInventaire(1, Production.BOIS);
@@ -59,7 +59,7 @@ public class Plateau04DessinUTest {
 
     @Test
     public void chercheProprietaireSegment() {
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         Joueur j1 = new Joueur("Bleu", Couleur.BLEU, TypeJoueur.HUMAIN);
         j1.changeInventaire(1, Production.ARGILE);
         j1.changeInventaire(1, Production.BOIS);
@@ -88,6 +88,7 @@ public class Plateau04DessinUTest {
         Segment s5 = new Segment(0, 6, j1, plateau);
         assertThat(j3.acheteRoute(plateau, s5)).isTrue();
         assertThat(plateau.getProprietaireSegment(0, 6)).isEqualTo(j3);
+
         j3.changeInventaire(1, Production.ARGILE);
         j3.changeInventaire(1, Production.BOIS);
         Segment s6 = new Segment(16, 22, j3, plateau);
@@ -100,6 +101,10 @@ public class Plateau04DessinUTest {
         j3.changeInventaire(1, Production.BOIS);
         Segment s8 = new Segment(8, 14, j3, plateau);
         assertThat(j3.acheteRoute(plateau, s8)).isTrue();
+        j3.changeInventaire(1, Production.ARGILE);
+        j3.changeInventaire(1, Production.BOIS);
+        Segment s9 = new Segment(9, 15, j3, plateau);
+        assertThat(j3.acheteRoute(plateau, s9)).isTrue();
 
         plateau.dessinePlateau();
     }

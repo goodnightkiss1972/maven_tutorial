@@ -23,11 +23,9 @@ public class ConsoleJ {
     }
 
     public void printNombreEntier99(String style, Integer nombre) {
+        this.print(style, nombre + "" + AnsiColors.ANSI_RESET);
         if (nombre >= 0 && nombre < 10) {
-            this.print(style, nombre + " " + AnsiColors.ANSI_RESET);
-        }
-        if (nombre >= 10 && nombre < 100) {
-            this.print(style, nombre + "" + AnsiColors.ANSI_RESET);
+            this.print(style, " " + AnsiColors.ANSI_RESET);
         }
         if (nombre < 0 || nombre >= 100) {
             throw new IllegalArgumentException("Cette methode ne peut afficher qu'entre 0 et 99");

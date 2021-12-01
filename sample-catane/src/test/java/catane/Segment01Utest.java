@@ -14,13 +14,13 @@ public class Segment01Utest {
 
     @Test
     public void creerSegmentValide1() {
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         assertThat(plateau.isSegmentValide(0, 1)).isTrue();
     }
 
     @Test
     public void creerSegmentValideDansPlateau() {
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         assertThat(plateau.isSegmentValide(0, 1)).isTrue();
         assertThat(plateau.isSegmentValide(1, 2)).isTrue();
         assertThat(plateau.isSegmentValide(1, 7)).isTrue();
@@ -36,7 +36,7 @@ public class Segment01Utest {
 
     @Test
     public void creerSegmentInvalideDansPlateau() {
-        Plateau plateau = new Plateau(5, 3);
+        Plateau plateau = new Plateau(5, 3, null);
         assertThat(plateau.isSegmentValide(0, -1)).isFalse();
         assertThat(plateau.isSegmentValide(0, -6)).isFalse();
         assertThat(plateau.isSegmentValide(1, 5)).isFalse();
