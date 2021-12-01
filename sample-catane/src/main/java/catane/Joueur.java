@@ -16,6 +16,21 @@ public class Joueur {
     Integer inventaireBle;
     Integer inventaireMinerai;
 
+    public Joueur(String nom, Couleur couleur, TypeJoueur typeJoueur) {
+        if  (nom == null || couleur == null || typeJoueur == null) {
+            throw new IllegalArgumentException("Le joueur ne peut pas etre cree sans nom ou sans couleur ou sans type !!");
+        }
+        this.nom = nom;
+        this.couleur = couleur;
+        this.typeJoueur = typeJoueur;
+        this.points = 0;
+        this.inventaireBois = 0;
+        this.inventaireArgile = 0;
+        this.inventaireLaine = 0;
+        this.inventaireBle = 0;
+        this.inventaireMinerai = 0;
+    }
+
     public Integer getPoints() {
         return points;
     }
@@ -103,21 +118,6 @@ public class Joueur {
         }
     }
 
-    public Joueur(String nom, Couleur couleur, TypeJoueur typeJoueur) {
-        if  (nom == null || couleur == null || typeJoueur == null) {
-            throw new IllegalArgumentException("Le joueur ne peut pas etre cree sans nom ou sans couleur ou sans type !!");
-        }
-        this.nom = nom;
-        this.couleur = couleur;
-        this.typeJoueur = typeJoueur;
-        this.points = 0;
-        this.inventaireBois = 0;
-        this.inventaireArgile = 0;
-        this.inventaireLaine = 0;
-        this.inventaireBle = 0;
-        this.inventaireMinerai = 0;
-    }
-
     public void changeInventaire(Integer quantite, Production ressource) {
         if (quantite == null || ressource == null) {
             throw new IllegalArgumentException("il faut une quantite et une ressource pour changer l'inventaire");
@@ -137,29 +137,6 @@ public class Joueur {
         if (ressource == Production.MINERAI) {
             setInventaireMinerai(getInventaireMinerai() + quantite);
         }
-    }
-
-    public boolean peutAcheterColonie() {
-        if (getInventaireArgile() < 1 || getInventaireBois() < 1 || getInventaireLaine() < 1 || getInventaireMinerai() < 1) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    public boolean acheteColonie(Point point) {
-        if (peutAcheterColonie() == true && point.getProprietaire() == null) {
-            point.setProprietaire(this);
-            point.setTypePoint(TypePoint.COLONIE);
-            changeInventaire(-1, Production.ARGILE);
-            changeInventaire(-1, Production.BOIS);
-            changeInventaire(-1, Production.LAINE);
-            changeInventaire(-1, Production.MINERAI);
-            ajoutePoints(1);
-            return true;
-        }
-        return false;
     }
 
     public Couleur getCouleur() {
@@ -188,4 +165,28 @@ public class Joueur {
         }
         return false;
     }
+
+    public boolean peutAcheterColonie() {
+        if (getInventaireArgile() < 1 || getInventaireBois() < 1 || getInventaireLaine() < 1 || getInventaireMinerai() < 1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public boolean acheteColonie(Point point) {
+        if (peutAcheterColonie() == true && point.getProprietaire() == null) {
+            point.setProprietaire(this);
+            point.setTypePoint(TypePoint.COLONIE);
+            changeInventaire(-1, Production.ARGILE);
+            changeInventaire(-1, Production.BOIS);
+            changeInventaire(-1, Production.LAINE);
+            changeInventaire(-1, Production.MINERAI);
+            ajoutePoints(1);
+            return true;
+        }
+        return false;
+    }
+
 }
