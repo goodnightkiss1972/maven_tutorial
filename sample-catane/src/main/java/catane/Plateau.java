@@ -278,4 +278,9 @@ public class Plateau {
             tuiles.get(i).setJeton(2 + rnd.nextInt(11));
         }
     }
+
+    public void production(Integer tirage) {
+
+    }
+    
 }

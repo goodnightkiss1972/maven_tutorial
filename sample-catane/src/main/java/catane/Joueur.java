@@ -189,4 +189,9 @@ public class Joueur {
         return false;
     }
 
+    public Boolean joue() {
+        return true;
+    }
+
+
 }
