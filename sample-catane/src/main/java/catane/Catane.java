@@ -4,10 +4,13 @@ import enums.Couleur;
 import enums.TypeJoueur;
 import utils.ConsoleJ;
 import utils.De6Faces;
+import utils.DialogueJ;
+
 import java.util.List;
 import java.util.OptionalLong;
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Catane {
     
@@ -19,14 +22,15 @@ public class Catane {
         Joueur j2 = new Joueur("fabien", Couleur.BLANC, TypeJoueur.IA);
         Joueur j3 = new Joueur("jade", Couleur.ROUGE, TypeJoueur.HUMAIN);
         List<Joueur> joueurs = new ArrayList<Joueur>();
-        //joueurs.add(j1);
-        //joueurs.add(j2);
-        //joueurs.add(j3);
+        joueurs.add(j1);
+        joueurs.add(j2);
+        joueurs.add(j3);
         //Jeu jeu = new Jeu(d1, d2, joueurs, 5, 3, OptionalLong.of(1234));
         ConsoleJ console = new ConsoleJ();
+        DialogueJ dialogue = new DialogueJ();
         console.effaceTout();
-        console.println(Couleur.MAUVE.getStylo(), "Combien de joueurs vont jouer a Catane svp ?");
-        console.println(Couleur.JAUNE.getStylo(), "3 ou 4 joueurs ? ( 3 / 4 )");
+
+
     }
 
 }

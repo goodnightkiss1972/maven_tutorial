@@ -22,11 +22,11 @@ public class DialogueUTest {
         reponses.add(2);
         reponses.add(3);
 
-        Dialogue dialogue = mock(Dialogue.class);
-        when(dialogue.demandeEntier(System.in)).thenReturn(1);
-        assertThat(reponses).contains(dialogue.demandeEntier(System.in));
-        when(dialogue.demandeEntier(System.in)).thenReturn(5);
-        assertThat(reponses).doesNotContain(dialogue.demandeEntier(System.in));
+        DialogueJ dialogue = mock(DialogueJ.class);
+        when(dialogue.demandeEntier("", "")).thenReturn(1);
+        assertThat(reponses).contains(dialogue.demandeEntier("", ""));
+        when(dialogue.demandeEntier("", "")).thenReturn(5);
+        assertThat(reponses).doesNotContain(dialogue.demandeEntier("", ""));
     }
 
     @Test
@@ -37,11 +37,11 @@ public class DialogueUTest {
         reponses.add("C");
         reponses.add("D");
 
-        Dialogue dialogue = mock(Dialogue.class);
-        when(dialogue.demandeChaine(System.in)).thenReturn("B");
-        assertThat(reponses).contains(dialogue.demandeChaine(System.in));
-        when(dialogue.demandeChaine(System.in)).thenReturn("E");
-        assertThat(reponses).doesNotContain(dialogue.demandeChaine(System.in));
+        DialogueJ dialogue = mock(DialogueJ.class);
+        when(dialogue.demandeChaine("", "")).thenReturn("B");
+        assertThat(reponses).contains(dialogue.demandeChaine("", ""));
+        when(dialogue.demandeChaine("", "")).thenReturn("E");
+        assertThat(reponses).doesNotContain(dialogue.demandeChaine("", ""));
     }
 
 }
