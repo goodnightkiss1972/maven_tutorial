@@ -11,6 +11,7 @@ public class Jeu {
     private De6Faces d2;
     private List<Joueur> joueurs;
     private Plateau plateau;
+    private static final Integer victoire = 10;
 
     public Jeu(De6Faces d1, De6Faces d2, List<Joueur> joueurs, Integer tailleHorizontale, Integer tailleVerticale, OptionalLong seedPlateau) {
         if (d1 == null || d2 == null || joueurs == null) {
@@ -30,10 +31,15 @@ public class Jeu {
     }
 
     public Joueur getGagnant() {
+        for (Integer i = 0; i < joueurs.size(); i++) {
+            if (joueurs.get(i).getPoints() == victoire) {
+                return joueurs.get(i);
+            }
+        }
         return null;
     }
 
-    public void lanceJeu() {
+    public Joueur lanceJeu() {
         Integer joueurEnCours = 0;
         while (this.getGagnant() == null) {
             plateau.dessinePlateau();
@@ -44,6 +50,7 @@ public class Jeu {
                 joueurEnCours = 0;
             }
         }
+        return this.getGagnant();
     }
 
 }

@@ -68,4 +68,21 @@ public class JeuUTest {
         }
     }
 
+    @Test
+    public void jeuSimulation01() {
+        De6Faces d1 = new De6Faces();
+        De6Faces d2 = new De6Faces();
+        List<Joueur> joueurs = new ArrayList<Joueur>();
+        Joueur j1 = new Joueur("fabien", Couleur.BLEU, TypeJoueur.HUMAIN);
+        Joueur j2 = new Joueur("georges", Couleur.BLANC, TypeJoueur.HUMAIN);
+        Joueur j3 = new Joueur("emile", Couleur.ROUGE, TypeJoueur.HUMAIN);
+        joueurs.add(j1);
+        joueurs.add(j2);
+        joueurs.add(j3);
+        Jeu jeu = new Jeu(d1, d2, joueurs, 5, 3, null);
+        j2.setPoints(10);
+        jeu.lanceJeu();
+        assertThat(jeu.getGagnant()).isEqualTo(j2);
+    }
+
 }
