@@ -16,7 +16,7 @@ public class Plateau {
     private Integer tailleVerticale;
     private OptionalLong optionSeed;
     private List<Tuile> tuiles;
-    private PointListe points;
+    private List<Point> points;
     private List<Segment> segments; // va contenir uniquement les segments occupés par un joueur (les routes)
 
     private ConsoleJ console = new ConsoleJ();
@@ -37,8 +37,7 @@ public class Plateau {
         this.tailleVerticale = tailleVerticale;
         this.optionSeed = optionSeed;
         setTuiles();
-        points = new PointListe();
-        setPoints(points);
+        setPoints();
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
         segments = new ArrayList<Segment>();
@@ -69,11 +68,12 @@ public class Plateau {
         this.tuiles = tuiles;
     }
 
-    public PointListe getPoints() {
+    public List<Point> getPoints() {
         return this.points;
     }
 
-    private void setPoints(PointListe points) {
+    private void setPoints() {
+        List<Point> points = new ArrayList<Point>();
         Integer i;
         for (i = 0; i < (tailleHorizontale + 1) * (tailleVerticale +1); i++) {
             points.add(new Point(i));
@@ -279,7 +279,21 @@ public class Plateau {
         }
     }
 
+    private List<Point> getPointsPourUnJoueur(Joueur joueurCritere) {
+        List<Point> resultat = new ArrayList<Point>();
+        Integer i;
+        for (i = 0; i < points.size(); i++) {
+            if (this.points.get(i).getProprietaire() == joueurCritere) {
+                resultat.add(points.get(i));
+            }
+        }
+        return resultat;
+    }
+   
     public void production(Integer tirage) {
+        // pour chaque tuile dont le jeton est egal au tirage
+        // faire la liste des croisements voisins occupes par des joueurs
+        // et crediter ces joueurs de la production de chaque tuile voisine de ces croisements
 
     }
     

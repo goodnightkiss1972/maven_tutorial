@@ -6,6 +6,8 @@ import utils.ConsoleJ;
 import java.util.List;
 import java.util.OptionalLong;
 
+import enums.Production;
+
 public class Jeu {
 
     private static ConsoleJ console = new ConsoleJ();
@@ -72,5 +74,40 @@ public class Jeu {
             console.aLaLigne();
         }
     }
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public Boolean placeSegmentDepart(Segment segment, Joueur joueur) {
+        joueur.changeInventaire(1, Production.ARGILE);
+        joueur.changeInventaire(1, Production.BOIS);
+        if (joueur.acheteRoute(plateau, segment)) {
+            return true;
+        }
+        else {
+            joueur.changeInventaire(-1, Production.ARGILE);
+            joueur.changeInventaire(-1, Production.BOIS);
+            return false;
+        }
+    }
+
+    public Boolean placePointDepart(Point point, Joueur joueur) {
+        joueur.changeInventaire(1, Production.ARGILE);
+        joueur.changeInventaire(1, Production.BOIS);
+        joueur.changeInventaire(1, Production.LAINE);
+        joueur.changeInventaire(1, Production.MINERAI);
+        if (joueur.acheteColonie(point)) {
+            return true;
+        }
+        else {
+            joueur.changeInventaire(-1, Production.ARGILE);
+            joueur.changeInventaire(-1, Production.BOIS);
+            joueur.changeInventaire(-1, Production.LAINE);
+            joueur.changeInventaire(-1, Production.MINERAI);
+            return false;
+        }
+    }
+
 
 }
