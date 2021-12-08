@@ -1,10 +1,14 @@
 package catane;
 
 import utils.De6Faces;
+import utils.ConsoleJ;
+
 import java.util.List;
 import java.util.OptionalLong;
 
 public class Jeu {
+
+    private static ConsoleJ console = new ConsoleJ();
 
     // le jeu possede deux des a 6 faces que les joueurs vont utiliser
     private De6Faces d1;
@@ -41,16 +45,32 @@ public class Jeu {
 
     public Joueur lanceJeu() {
         Integer joueurEnCours = 0;
-        while (this.getGagnant() == null) {
+        do {
             plateau.dessinePlateau();
+            console.aLaLigne();
+            dessineInventaire();
             plateau.production(getTirageDes());
             joueurs.get(joueurEnCours).joue();
             joueurEnCours++;
             if (joueurEnCours == joueurs.size()) {
                 joueurEnCours = 0;
             }
-        }
+        } while (getGagnant() == null);
         return this.getGagnant();
+    }
+
+    private void dessineInventaire() {
+        for (Integer i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            console.print(j.getCouleur().getMarqueur(), j.getNom());
+            console.print(j.getCouleur().getStylo(), " " + j.getPoints() + " pts");
+            console.print(j.getCouleur().getStylo(), " / Argile = " + j.getInventaireArgile());
+            console.print(j.getCouleur().getStylo(), " / Bois = " + j.getInventaireBois());
+            console.print(j.getCouleur().getStylo(), " / Laine = " + j.getInventaireLaine());
+            console.print(j.getCouleur().getStylo(), " / Ble = " + j.getInventaireBle());
+            console.print(j.getCouleur().getStylo(), " / Minerai = " + j.getInventaireMinerai());
+            console.aLaLigne();
+        }
     }
 
 }

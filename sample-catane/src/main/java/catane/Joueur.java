@@ -193,5 +193,8 @@ public class Joueur {
         return true;
     }
 
+    public String getNom() {
+        return nom;
+    }
 
 }
