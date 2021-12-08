@@ -42,6 +42,7 @@ public class Plateau {
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
         segments = new ArrayList<Segment>();
         setJetons();
+        //setTerrains();
     }
     
     public Integer getTailleHorizontale() {
@@ -210,12 +211,6 @@ public class Plateau {
         }
         return null;
     }   
-
-    public Boolean construitRoute(Segment segment, Joueur joueur) {
-        segments.add(0, segment);
-        segments.get(0).setProprietaire(joueur);
-        return true;
-    }
 
     public Boolean isSegmentValide(Integer idPointA, Integer idPointB) {
         // cas ou le segment est manifestement invalide

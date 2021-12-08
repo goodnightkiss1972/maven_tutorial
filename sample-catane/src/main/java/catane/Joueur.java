@@ -158,7 +158,8 @@ public class Joueur {
     
     public boolean acheteRoute(Plateau plateau, Segment segment) {
         if (peutAcheterRoute() == true && plateau.getProprietaireSegment(segment.getIdPointA(), segment.getIdPointB()) == null) {
-            plateau.construitRoute(segment, this);
+            plateau.getSegments().add(0, segment);
+            plateau.getSegments().get(0).setProprietaire(this);
             changeInventaire(-1, Production.ARGILE);
             changeInventaire(-1, Production.BOIS);
             return true;
