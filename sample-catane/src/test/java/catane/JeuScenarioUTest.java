@@ -28,7 +28,7 @@ public class JeuScenarioUTest {
         joueurs.add(j0);
         joueurs.add(j1);
         joueurs.add(j2);
-        jeu = new Jeu(d1, d2, joueurs, 5, 3, OptionalLong.of(1234));
+        jeu = new Jeu(d1, d2, joueurs, 5, 5, OptionalLong.of(123456));
     }
 
     @Test
@@ -40,6 +40,26 @@ public class JeuScenarioUTest {
         assertThat(jeu.placeSegmentDepart(new Segment(8, 14, null), joueurs.get(2))).isTrue();
         assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(14), joueurs.get(2))).isTrue();
         jeu.getPlateau().dessinePlateau();
+
+        jeu.getPlateau().production(3);
+        assertThat(joueurs.get(0).getInventaireBois()).isEqualTo(0);
+        assertThat(joueurs.get(0).getInventaireArgile()).isEqualTo(1);
+        assertThat(joueurs.get(0).getInventaireLaine()).isEqualTo(3);
+        assertThat(joueurs.get(0).getInventaireBle()).isEqualTo(0);
+        assertThat(joueurs.get(0).getInventaireMinerai()).isEqualTo(0);
+
+        assertThat(joueurs.get(1).getInventaireBois()).isEqualTo(2);
+        assertThat(joueurs.get(1).getInventaireArgile()).isEqualTo(0);
+        assertThat(joueurs.get(1).getInventaireLaine()).isEqualTo(2);
+        assertThat(joueurs.get(1).getInventaireBle()).isEqualTo(2);
+        assertThat(joueurs.get(1).getInventaireMinerai()).isEqualTo(2);
+
+        assertThat(joueurs.get(2).getInventaireBois()).isEqualTo(0);
+        assertThat(joueurs.get(2).getInventaireArgile()).isEqualTo(1);
+        assertThat(joueurs.get(2).getInventaireLaine()).isEqualTo(2);
+        assertThat(joueurs.get(2).getInventaireBle()).isEqualTo(0);
+        assertThat(joueurs.get(2).getInventaireMinerai()).isEqualTo(0);
+
     }
 
 }

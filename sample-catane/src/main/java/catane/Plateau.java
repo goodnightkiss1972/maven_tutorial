@@ -8,6 +8,7 @@ import java.util.Random;
 
 import enums.Couleur;
 import enums.Terrain;
+import enums.Production;
 import utils.ConsoleJ;
 
 public class Plateau {
@@ -294,30 +295,64 @@ public class Plateau {
             rnd = new Random(localSeed);
         }
         for (int i = 0; i < (((tailleHorizontale * tailleVerticale) - 1) / 2); i++) {
-            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(6)));
+            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(5)));
         }
         for (int i = ((tailleHorizontale * tailleVerticale) + 1) / 2; i < (tailleHorizontale * tailleVerticale); i++) {
-            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(6)));
+            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(5)));
         }
     }
 
-
-    private List<Point> getPointsPourUnJoueur(Joueur joueurCritere) {
-        List<Point> resultat = new ArrayList<Point>();
-        Integer i;
-        for (i = 0; i < points.size(); i++) {
-            if (this.points.get(i).getProprietaire() == joueurCritere) {
-                resultat.add(points.get(i));
-            }
-        }
-        return resultat;
-    }
-   
     public void production(Integer tirage) {
         // pour chaque tuile dont le jeton est egal au tirage
         // faire la liste des croisements voisins occupes par des joueurs
         // et crediter ces joueurs de la production de chaque tuile voisine de ces croisements
-
+        List<Tuile> tuilesTirees = getTuilesDeTirage(tirage);
+        if (tuilesTirees.size() == 0) {
+            return;
+        }
+        for (Integer tuile = 0; tuile < tuilesTirees.size(); tuile++) {
+            for (Integer pointsVoisins = 0; pointsVoisins < 4; pointsVoisins++) {
+                //System.out.println(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
+                credite(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
+            }
+        }
     }
     
+    private List<Tuile> getTuilesDeTirage(Integer tirage) {
+        List<Tuile> resultat = new ArrayList<Tuile>();
+        for (Integer i = 0; i < tuiles.size(); i++) {
+            if (tuiles.get(i).getJeton() == tirage) {
+                resultat.add(tuiles.get(i));
+            }
+        }
+        return resultat;
+    }
+
+    private void credite(Integer idPoint) {
+        if (points.get(idPoint).getProprietaire() == null) {
+            return;
+        }
+        else {
+            Joueur j = points.get(idPoint).getProprietaire();
+            for (Integer tuilesVoisines = 0; tuilesVoisines < points.get(idPoint).getTuilesVoisines().size(); tuilesVoisines++) {
+                //System.out.println("##" + points.get(idPoint).getTuilesVoisines().get(tuilesVoisines));
+                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 0) {
+                    j.changeInventaire(1, Production.BOIS);
+                }
+                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 1) {
+                    j.changeInventaire(1, Production.ARGILE);
+                }
+                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 2) {
+                    j.changeInventaire(1, Production.LAINE);
+                }
+                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 3) {
+                    j.changeInventaire(1, Production.BLE);
+                }
+                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 4) {
+                    j.changeInventaire(1, Production.MINERAI);
+                }
+            }
+        }
+    }
+
 }

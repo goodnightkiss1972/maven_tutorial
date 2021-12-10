@@ -8,10 +8,9 @@ import java.util.OptionalLong;
 public class Plateau05JetonsUTest {
 
     @Test
-    public void creerPlateau5x3AvecGraine() {
-        Plateau plateau = new Plateau(5, 3, OptionalLong.of(1234));
+    public void creerPlateau5x5AvecGraine() {
+        Plateau plateau = new Plateau(5, 5, OptionalLong.of(123456));
         plateau.dessinePlateau();
-        assertThat(plateau.getTuiles().get(2).getJeton()).isEqualTo(8);
+        assertThat(plateau.getTuiles().get(2).getJeton()).isEqualTo(5);
     }
-
 }
