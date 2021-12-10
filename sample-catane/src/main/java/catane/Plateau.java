@@ -42,7 +42,7 @@ public class Plateau {
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
         segments = new ArrayList<Segment>();
         setJetons();
-        //setTerrains();
+        setTerrains();
     }
     
     public Integer getTailleHorizontale() {
@@ -151,11 +151,21 @@ public class Plateau {
 
         for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
             if (i != this.tailleHorizontale + departTuile) {
-                console.print(couleurFond.getStylo(), "|    ");
-                console.printNombreEntier99(couleurFond.getMarqueur(), tuiles.get(i).getJeton());
+                console.print(couleurFond.getStylo(), "|");
+                console.print(couleurFond.getStylo(), "    ");
+                console.printNombreEntier99(couleurFond.getStylo(), tuiles.get(i).getJeton());
                 console.print(couleurFond.getStylo(), "   ");
             }
         }
+        console.print(couleurFond.getStylo(), "|");
+        console.aLaLigne();
+        for (i = departTuile; i <= this.tailleHorizontale + departTuile; i++) {
+            if (i != this.tailleHorizontale + departTuile) {
+                console.print(couleurFond.getStylo(), "|");
+                console.print(couleurFond.getStylo(), tuiles.get(i).getTerrain().getLabelTerrain());
+            }
+        }
+        console.print(couleurFond.getStylo(), "|");
         console.aLaLigne();
 
         for (i = departSegment; i <= this.tailleHorizontale + departSegment; i++) {
@@ -273,6 +283,24 @@ public class Plateau {
             tuiles.get(i).setJeton(2 + rnd.nextInt(11));
         }
     }
+
+    private void setTerrains() {
+        Random rnd;
+        if (optionSeed == null) {
+            rnd = new Random();
+        }
+        else {
+            long localSeed = optionSeed.getAsLong();
+            rnd = new Random(localSeed);
+        }
+        for (int i = 0; i < (((tailleHorizontale * tailleVerticale) - 1) / 2); i++) {
+            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(6)));
+        }
+        for (int i = ((tailleHorizontale * tailleVerticale) + 1) / 2; i < (tailleHorizontale * tailleVerticale); i++) {
+            tuiles.get(i).setTerrain(Terrain.getTerrainParId(rnd.nextInt(6)));
+        }
+    }
+
 
     private List<Point> getPointsPourUnJoueur(Joueur joueurCritere) {
         List<Point> resultat = new ArrayList<Point>();
