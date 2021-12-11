@@ -39,7 +39,6 @@ public class JeuScenarioUTest {
         assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(10), joueurs.get(1))).isTrue();
         assertThat(jeu.placeSegmentDepart(new Segment(8, 14, null), joueurs.get(2))).isTrue();
         assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(14), joueurs.get(2))).isTrue();
-        jeu.getPlateau().dessinePlateau();
 
         jeu.getPlateau().production(3);
         assertThat(joueurs.get(0).getInventaireBois()).isEqualTo(0);
@@ -59,6 +58,9 @@ public class JeuScenarioUTest {
         assertThat(joueurs.get(2).getInventaireLaine()).isEqualTo(2);
         assertThat(joueurs.get(2).getInventaireBle()).isEqualTo(0);
         assertThat(joueurs.get(2).getInventaireMinerai()).isEqualTo(0);
+
+        jeu.getPlateau().dessinePlateau();
+        jeu.dessineInventaire();
 
     }
 

@@ -61,7 +61,7 @@ public class Jeu {
         return this.getGagnant();
     }
 
-    private void dessineInventaire() {
+    public void dessineInventaire() {
         for (Integer i = 0; i < joueurs.size(); i++) {
             Joueur j = joueurs.get(i);
             console.print(j.getCouleur().getMarqueur(), j.getNom());
