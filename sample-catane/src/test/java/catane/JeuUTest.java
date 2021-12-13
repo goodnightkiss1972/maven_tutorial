@@ -81,7 +81,6 @@ public class JeuUTest {
         joueurs.add(j3);
         Jeu jeu = new Jeu(d1, d2, joueurs, 5, 3, null);
         j2.setPoints(10);
-        jeu.lanceJeu();
         assertThat(jeu.getGagnant()).isEqualTo(j2);
     }
 

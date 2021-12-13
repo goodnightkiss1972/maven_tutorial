@@ -47,6 +47,7 @@ public class Catane {
             jeu = new Jeu(d1, d2, listeJoueurs, tailleHorizontale, tailleVerticale, null);
             console.println(Couleur.VERT.getStylo(), "Jeu aleatoire.");
         }
+        jeu.initialiseJeu();
         jeu.lanceJeu();
     }
 }

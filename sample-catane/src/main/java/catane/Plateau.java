@@ -334,8 +334,10 @@ public class Plateau {
         // pour chaque tuile dont le jeton est egal au tirage
         // faire la liste des croisements voisins occupes par des joueurs
         // et crediter ces joueurs de la production de chaque tuile voisine de ces croisements
+        console.println(Couleur.MAUVE.getMarqueur(), "Les DES ont fait : " + tirage);
         List<Tuile> tuilesTirees = getTuilesDeTirage(tirage);
         if (tuilesTirees.size() == 0) {
+            console.println(Couleur.MAUVE.getStylo(), "Aucun gain de ressource...");
             return;
         }
         for (Integer tuile = 0; tuile < tuilesTirees.size(); tuile++) {

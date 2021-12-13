@@ -50,8 +50,8 @@ public class Jeu {
         do {
             plateau.dessinePlateau();
             console.aLaLigne();
-            dessineInventaire();
             plateau.production(getTirageDes());
+            dessineInventaire();
             joueurs.get(joueurEnCours).joue();
             joueurEnCours++;
             if (joueurEnCours == joueurs.size()) {
@@ -59,6 +59,21 @@ public class Jeu {
             }
         } while (getGagnant() == null);
         return this.getGagnant();
+    }
+
+    public void initialiseJeu() {
+        for (Integer i = 0; i < joueurs.size(); i++) {
+            getPlateau().dessinePlateau();
+            joueurs.get(i).choisiSegmentDepart(this);
+            getPlateau().dessinePlateau();
+            joueurs.get(i).choisiColonieDepart(this);
+        }
+        for (Integer i = joueurs.size() -1; i >= 0; i--) {
+            getPlateau().dessinePlateau();
+            joueurs.get(i).choisiSegmentDepart(this);
+            getPlateau().dessinePlateau();
+            joueurs.get(i).choisiColonieDepart(this);
+        }
     }
 
     public void dessineInventaire() {

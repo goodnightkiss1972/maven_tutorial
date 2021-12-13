@@ -1,9 +1,13 @@
 package catane;
 
+import java.util.Arrays;
+
 import enums.Couleur;
 import enums.Production;
 import enums.TypeJoueur;
 import enums.TypePoint;
+import utils.ConsoleJ;
+import utils.DialogueJ;
 
 public class Joueur {
     String nom;
@@ -15,6 +19,9 @@ public class Joueur {
     Integer inventaireLaine;
     Integer inventaireBle;
     Integer inventaireMinerai;
+
+    ConsoleJ console = new ConsoleJ();
+    DialogueJ dialogue = new DialogueJ();
 
     public Joueur(String nom, Couleur couleur, TypeJoueur typeJoueur) {
         if  (nom == null || couleur == null || typeJoueur == null) {
@@ -157,7 +164,7 @@ public class Joueur {
     }
     
     public boolean acheteRoute(Plateau plateau, Segment segment) {
-        if (peutAcheterRoute() == true && plateau.getProprietaireSegment(segment.getIdPointA(), segment.getIdPointB()) == null) {
+        if (peutAcheterRoute() == true && plateau.getProprietaireSegment(segment.getIdPointA(), segment.getIdPointB()) == null && plateau.isSegmentValide(segment.getIdPointA(), segment.getIdPointB())) {
             plateau.getSegments().add(0, segment);
             plateau.getSegments().get(0).setProprietaire(this);
             changeInventaire(-1, Production.ARGILE);
@@ -190,12 +197,49 @@ public class Joueur {
         return false;
     }
 
-    public Boolean joue() {
-        return true;
-    }
-
     public String getNom() {
         return nom;
+    }
+
+    public void joue() {
+        console.aLaLigne();
+        console.println(getCouleur().getStylo(), getNom() + " choisissez une action :");
+        console.println(getCouleur().getStylo(), "0 : passez votre tour");
+        console.println(getCouleur().getStylo(), "1 : achetez une route");
+        Boolean action;
+        do {
+            action = lanceAction(dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Votre choix : ", Arrays.asList(0, 1)));
+        } while (action == false);
+    }
+
+    private Boolean lanceAction(Integer actionChoisie) {
+        if (actionChoisie == 0) {
+            return true; // on passe son tour donc on arrete le do/while de joue()
+        }
+        if (actionChoisie == 1) {
+            lanceAchatRoute();
+        }
+        return false; // a part si on a passe son tour (0) on peut choisir une nouvelle action
+    }
+
+    private void lanceAchatRoute() {
+
+    }
+
+    public void choisiSegmentDepart(Jeu jeu) {
+        Integer idPointA, idPointB;
+        do {
+        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une route gratuitement...");
+        idPointA = dialogue.demandeEntier(getCouleur().getStylo(), "Point de depart : ");
+        idPointB = dialogue.demandeEntier(getCouleur().getStylo(), "Point d'arrivee : ");
+        } while (jeu.placeSegmentDepart(new Segment(idPointA, idPointB, null), this) == false);
+    }
+
+    public void choisiColonieDepart(Jeu jeu) {
+        Integer idPoint;
+        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une colonie gratuitement...");
+        idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Colonie : ");
+        jeu.placePointDepart(jeu.getPlateau().getPoints().get(idPoint), this);
     }
 
 }
