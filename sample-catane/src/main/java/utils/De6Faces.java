@@ -5,7 +5,6 @@ import java.util.Random;
 public class De6Faces {
     
     public Integer nbrFaces;
-    private Integer tirage;
     private Random rnd;
 
     public De6Faces() {
