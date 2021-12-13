@@ -1,6 +1,6 @@
 package catane;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import enums.Couleur;
@@ -9,7 +9,8 @@ import enums.TypePoint;
 public class Point {
     
     private Integer idPoint;
-    private List<Integer> tuilesVoisines;
+    private List<Integer> idTuilesVoisines;
+    private List<Integer> idPointsVoisins;
     private Joueur proprietaire;
     private TypePoint typePoint;
 
@@ -18,7 +19,8 @@ public class Point {
             throw new IllegalArgumentException("La tuile doit avoir un identifiant !!");
         }
         this.idPoint = idPoint;
-        this.tuilesVoisines = new LinkedList<Integer>();
+        setIdTuilesVoisines(new ArrayList<Integer>());
+        setIdPointsVoisins(new ArrayList<Integer>());
         this.proprietaire = null;
         this.typePoint = TypePoint.LIBRE;
     }
@@ -27,12 +29,16 @@ public class Point {
         return idPoint;
     }
 
-    public List<Integer> getTuilesVoisines() {
-        return tuilesVoisines;
+    public List<Integer> getIdTuilesVoisines() {
+        return idTuilesVoisines;
     }
 
-    public void addTuilesVoisines(Integer idTuile) {
-        this.tuilesVoisines.add(idTuile);
+    public void setIdTuilesVoisines(List<Integer> idTuilesVoisines) {
+        this.idTuilesVoisines = idTuilesVoisines;
+    }
+
+    public void addIdTuilesVoisines(Integer idTuile) {
+        this.idTuilesVoisines.add(idTuile);
     }  
         
     public Joueur getProprietaire() {
@@ -71,6 +77,47 @@ public class Point {
         this.typePoint = typePoint;
     }
 
+    public List<Integer> getIdPointsVoisins() {
+        return idPointsVoisins;
+    }
 
-    
+    public void setIdPointsVoisins(List<Integer> idPointsVoisins) {
+        this.idPointsVoisins = idPointsVoisins;
+    }
+
+    public void addIdPointVoisin(Integer idPoint) {
+        getIdPointsVoisins().add(idPoint);
+    }  
+
+
+    public Boolean peutBatirPourUnJoueur(Point point, Plateau plateau, Joueur joueur) {
+        // on peut batir au point X si une route appartenant au joueur y arrive
+        // et il ne faut pas qu'il y ait deja une construction du joueur autour de X.
+
+        // Compte le nombre de constructions du joueur autour de X
+        Integer compteConstruction = 0;
+        for (Integer i = 0; i < point.getIdPointsVoisins().size(); i++) {
+            if (plateau.getPoints().get(point.getIdPointsVoisins().get(i)).getProprietaire() == joueur) {
+                compteConstruction++;
+            }
+        }
+        if (compteConstruction > 0) {
+            System.out.println("Impossible, une de vos construction est trop proche !");
+            return false;
+        }
+
+        Integer compteRoute = 0;
+        for (Integer i = 0; i < point.getIdPointsVoisins().size(); i++) {
+            if (plateau.getProprietaireSegment(point.getIdPoint(), plateau.getPoints().get(point.getIdPointsVoisins().get(i)).getIdPoint()) == joueur) {
+                compteRoute++;
+            }
+        }
+        if (compteRoute == 0) {
+            System.out.println("Impossible, aucune de vos routes n'arrive ici !");
+            return false;
+        }
+        return true;
+    } 
+
+
 }

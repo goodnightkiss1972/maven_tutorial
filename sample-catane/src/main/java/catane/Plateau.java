@@ -18,7 +18,7 @@ public class Plateau {
     private OptionalLong optionSeed;
     private List<Tuile> tuiles;
     private List<Point> points;
-    private List<Segment> segments; // va contenir uniquement les segments occupés par un joueur (les routes)
+    private List<Segment> segments; // va contenir uniquement les segments occupés par les joueurs (les routes)
 
     private ConsoleJ console = new ConsoleJ();
     private Couleur couleurFond = Couleur.MAUVE;
@@ -40,6 +40,7 @@ public class Plateau {
         setTuiles();
         setPoints();
         setPointsVoisinsDeTuile(); // on commence par prendre les tuiles et calculer leur voisins
+        setPointsVoisinsDePoint();
         setTuilesVoisinesDePoint(); // ensuite on reverse les tableaux pour avoir les tuiles voisines de chaque point
         segments = new ArrayList<Segment>();
         setJetons();
@@ -106,7 +107,25 @@ public class Plateau {
             //System.out.println(i);
             for (j = 0; j < this.tuiles.get(i).getPointsVoisins().size(); j++) {
                 //System.out.println("##"+ j + "##" + this.tuiles.get(i).getPointsVoisins().get(j));
-                this.points.get(this.tuiles.get(i).getPointsVoisins().get(j)).addTuilesVoisines(i);
+                this.points.get(this.tuiles.get(i).getPointsVoisins().get(j)).addIdTuilesVoisines(i);
+            }
+        }
+    }
+
+    private void setPointsVoisinsDePoint() {
+        Integer i;
+        for (i = 0; i < getPoints().size(); i++) {
+            if (i - 1 >= 0) {
+                getPoints().get(i).addIdPointVoisin(i - 1);
+            }
+            if (i + 1 < getPoints().size()) {
+                getPoints().get(i).addIdPointVoisin(i + 1);
+            }
+            if (i - (getTailleHorizontale() + 1) >= 0) {
+                getPoints().get(i).addIdPointVoisin(i - (getTailleHorizontale() + 1));
+            }
+            if (i + (getTailleHorizontale() + 1) < getPoints().size()) {
+                getPoints().get(i).addIdPointVoisin(i + (getTailleHorizontale() + 1));
             }
         }
     }
@@ -206,6 +225,7 @@ public class Plateau {
     }
 
     public Joueur getProprietaireSegment(Integer idPointA, Integer idPointB) {
+        Integer ptsA, ptsB;
         if (idPointA == null || idPointB == null) {
             return null;
         }
@@ -215,8 +235,16 @@ public class Plateau {
         if (getSegments().size() == 0) {
             return null;
         }
+        if (idPointA < idPointB) {
+            ptsA = idPointA;
+            ptsB = idPointB;
+        }
+        else {
+            ptsA = idPointB;
+            ptsB = idPointA;
+        }
         for (Integer i = 0; i < getSegments().size(); i++) {
-            if (getSegments().get(i).getIdPointA() == idPointA && getSegments().get(i).getIdPointB() == idPointB) {
+            if (getSegments().get(i).getIdPointA() == ptsA && getSegments().get(i).getIdPointB() == ptsB) {
                 return getSegments().get(i).getProprietaire();
             }
         }
@@ -334,21 +362,21 @@ public class Plateau {
         }
         else {
             Joueur j = points.get(idPoint).getProprietaire();
-            for (Integer tuilesVoisines = 0; tuilesVoisines < points.get(idPoint).getTuilesVoisines().size(); tuilesVoisines++) {
+            for (Integer tuilesVoisines = 0; tuilesVoisines < points.get(idPoint).getIdTuilesVoisines().size(); tuilesVoisines++) {
                 //System.out.println("##" + points.get(idPoint).getTuilesVoisines().get(tuilesVoisines));
-                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 0) {
+                if (tuiles.get(points.get(idPoint).getIdTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 0) {
                     j.changeInventaire(1, Production.BOIS);
                 }
-                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 1) {
+                if (tuiles.get(points.get(idPoint).getIdTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 1) {
                     j.changeInventaire(1, Production.ARGILE);
                 }
-                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 2) {
+                if (tuiles.get(points.get(idPoint).getIdTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 2) {
                     j.changeInventaire(1, Production.LAINE);
                 }
-                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 3) {
+                if (tuiles.get(points.get(idPoint).getIdTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 3) {
                     j.changeInventaire(1, Production.BLE);
                 }
-                if (tuiles.get(points.get(idPoint).getTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 4) {
+                if (tuiles.get(points.get(idPoint).getIdTuilesVoisines().get(tuilesVoisines)).getTerrain().getIdTerrain() == 4) {
                     j.changeInventaire(1, Production.MINERAI);
                 }
             }

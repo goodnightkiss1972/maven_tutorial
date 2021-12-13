@@ -32,7 +32,7 @@ public class JeuScenarioUTest {
     }
 
     @Test
-    public void scenarioJeu01() {
+    public void scenarioJeu01PlacementCorrect() {
         assertThat(jeu.placeSegmentDepart(new Segment(7, 8, null), joueurs.get(0))).isTrue();
         assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(8), joueurs.get(0))).isTrue();
         assertThat(jeu.placeSegmentDepart(new Segment(9, 10, null), joueurs.get(1))).isTrue();
@@ -61,7 +61,43 @@ public class JeuScenarioUTest {
 
         jeu.getPlateau().dessinePlateau();
         jeu.dessineInventaire();
+    }
 
+    @Test
+    public void scenarioJeu01PlacementIncorrect() {
+
+        // on essaie de placer un point avant meme une route aux 4 coins du plateau
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(0), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(5), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(18), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(23), joueurs.get(0))).isFalse();
+
+        // on place le segment de depart 
+        assertThat(jeu.placeSegmentDepart(new Segment(7, 8, null), joueurs.get(0))).isTrue();
+
+        // on essaie de se rapprocher mais pas assez pres
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(1), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(2), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(6), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(9), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(13), joueurs.get(0))).isFalse();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(14), joueurs.get(0))).isFalse();
+
+        // on place la colonie correctement
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(7), joueurs.get(0))).isTrue();
+
+        // on place un deuxieme segment de depart 
+        assertThat(jeu.placeSegmentDepart(new Segment(7, 13, null), joueurs.get(0))).isTrue();
+        // impossible car construction trop proche
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(13), joueurs.get(0))).isFalse();
+
+        // on place un troisieme segment de depart 
+        assertThat(jeu.placeSegmentDepart(new Segment(6, 7, null), joueurs.get(0))).isTrue();
+        // impossible car construction trop proche
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(6), joueurs.get(0))).isFalse();
+
+
+        jeu.getPlateau().dessinePlateau();
     }
 
 }

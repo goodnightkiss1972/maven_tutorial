@@ -18,10 +18,10 @@ public class PointUTest {
     @Test
     public void creerPointSimple() {
         Point p1 = new Point(0);
-        assertThat(p1.getTuilesVoisines().size()).isEqualTo(0);
-        p1.addTuilesVoisines(0);
-        p1.addTuilesVoisines(1);
-        assertThat(p1.getTuilesVoisines().size()).isEqualTo(2);
+        assertThat(p1.getIdTuilesVoisines().size()).isEqualTo(0);
+        p1.addIdTuilesVoisines(0);
+        p1.addIdTuilesVoisines(1);
+        assertThat(p1.getIdTuilesVoisines().size()).isEqualTo(2);
     }
 
     @Test

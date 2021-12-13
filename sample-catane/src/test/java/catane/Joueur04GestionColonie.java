@@ -30,7 +30,7 @@ public class Joueur04GestionColonie {
         j2.changeInventaire(2, Production.BOIS);
         j2.changeInventaire(1, Production.LAINE);
         j2.changeInventaire(3, Production.MINERAI);
-        assertThat(j2.acheteColonie(plateau.getPoints().get(5))).isTrue();
+        assertThat(j2.acheteColonie(plateau, plateau.getPoints().get(5))).isTrue();
         assertThat(j2.getInventaireArgile()).isEqualTo(0);
         assertThat(j2.getInventaireBois()).isEqualTo(1);
         assertThat(j2.getInventaireLaine()).isEqualTo(0);
@@ -54,8 +54,8 @@ public class Joueur04GestionColonie {
         j4.changeInventaire(1, Production.LAINE);
         j4.changeInventaire(1, Production.MINERAI);
         // j3 achete la colonie au point 5
-        assertThat(j3.acheteColonie(plateau.getPoints().get(5))).isTrue();
+        assertThat(j3.acheteColonie(plateau, plateau.getPoints().get(5))).isTrue();
         // j4 essaie d'acheter une colonie deja achetee par j3
-        assertThat(j4.acheteColonie(plateau.getPoints().get(5))).isFalse();
+        assertThat(j4.acheteColonie(plateau, plateau.getPoints().get(5))).isFalse();
     }
 }

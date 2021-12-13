@@ -25,7 +25,7 @@ public class Plateau04DessinUTest {
         j1.changeInventaire(1, Production.BOIS);
         j1.changeInventaire(1, Production.LAINE);
         j1.changeInventaire(1, Production.MINERAI);
-        j1.acheteColonie(plateau.getPoints().get(1));
+        j1.acheteColonie(plateau, plateau.getPoints().get(1));
         for (i = 0; i < plateau.getTailleHorizontale() + 1; i++) {
             console.printNombreEntier99(plateau.getPoints().get(i).getStyle(), i);
         }
@@ -40,13 +40,13 @@ public class Plateau04DessinUTest {
         j1.changeInventaire(1, Production.BOIS);
         j1.changeInventaire(1, Production.LAINE);
         j1.changeInventaire(1, Production.MINERAI);
-        j1.acheteColonie(plateau.getPoints().get(2));
+        j1.acheteColonie(plateau, plateau.getPoints().get(2));
         Joueur j2 = new Joueur("rouge", Couleur.ROUGE, TypeJoueur.HUMAIN);
         j2.changeInventaire(1, Production.ARGILE);
         j2.changeInventaire(1, Production.BOIS);
         j2.changeInventaire(1, Production.LAINE);
         j2.changeInventaire(1, Production.MINERAI);
-        j2.acheteColonie(plateau.getPoints().get(9));
+        j2.acheteColonie(plateau, plateau.getPoints().get(9));
         Joueur j3 = new Joueur("bleu", Couleur.BLEU, TypeJoueur.HUMAIN);
         plateau.getPoints().get(13).setProprietaire(j3);
         plateau.getPoints().get(13).setTypePoint(TypePoint.VILLE);

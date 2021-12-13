@@ -176,8 +176,8 @@ public class Joueur {
         }
     }
 
-    public boolean acheteColonie(Point point) {
-        if (peutAcheterColonie() == true && point.getProprietaire() == null) {
+    public boolean acheteColonie(Plateau plateau, Point point) {
+        if (peutAcheterColonie() == true && point.getProprietaire() == null && point.peutBatirPourUnJoueur(point, plateau, this)) {
             point.setProprietaire(this);
             point.setTypePoint(TypePoint.COLONIE);
             changeInventaire(-1, Production.ARGILE);

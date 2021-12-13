@@ -97,7 +97,7 @@ public class Jeu {
         joueur.changeInventaire(1, Production.BOIS);
         joueur.changeInventaire(1, Production.LAINE);
         joueur.changeInventaire(1, Production.MINERAI);
-        if (joueur.acheteColonie(point)) {
+        if (joueur.acheteColonie(plateau, point)) {
             return true;
         }
         else {
