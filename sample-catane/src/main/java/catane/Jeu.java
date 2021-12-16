@@ -48,11 +48,12 @@ public class Jeu {
     public Joueur lanceJeu() {
         Integer joueurEnCours = 0;
         do {
+            console.effaceTout();
             plateau.dessinePlateau();
             console.aLaLigne();
             plateau.production(getTirageDes());
             dessineInventaire();
-            joueurs.get(joueurEnCours).joue();
+            joueurs.get(joueurEnCours).joue(this);
             joueurEnCours++;
             if (joueurEnCours == joueurs.size()) {
                 joueurEnCours = 0;

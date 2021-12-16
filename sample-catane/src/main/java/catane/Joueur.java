@@ -1,11 +1,13 @@
 package catane;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import enums.Couleur;
 import enums.Production;
 import enums.TypeJoueur;
 import enums.TypePoint;
+import enums.Action;
 import utils.ConsoleJ;
 import utils.DialogueJ;
 
@@ -19,6 +21,7 @@ public class Joueur {
     Integer inventaireLaine;
     Integer inventaireBle;
     Integer inventaireMinerai;
+    List<Integer> listeIdActions = new ArrayList<>();
 
     ConsoleJ console = new ConsoleJ();
     DialogueJ dialogue = new DialogueJ();
@@ -37,6 +40,15 @@ public class Joueur {
         this.inventaireBle = 0;
         this.inventaireMinerai = 0;
     }
+
+    public List<Integer> getListeIdActions() {
+        return rafraichitActions();
+    }
+
+    public void setListeIdActions() {
+        this.listeIdActions = rafraichitActions();
+    }
+
 
     public Integer getPoints() {
         return points;
@@ -201,29 +213,104 @@ public class Joueur {
         return nom;
     }
 
-    public void joue() {
+    public void joue(Jeu jeu) {
         console.aLaLigne();
-        console.println(getCouleur().getStylo(), getNom() + " choisissez une action :");
-        console.println(getCouleur().getStylo(), "0 : passez votre tour");
-        console.println(getCouleur().getStylo(), "1 : achetez une route");
         Boolean action;
         do {
-            action = lanceAction(dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Votre choix : ", Arrays.asList(0, 1)));
+            console.println(getCouleur().getStylo(), getNom() + " choisissez une action :");
+            afficheActions(getListeIdActions());
+            action = lanceAction(dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Votre choix : ", getListeIdActions()), jeu);
         } while (action == false);
     }
 
-    private Boolean lanceAction(Integer actionChoisie) {
-        if (actionChoisie == 0) {
+    public List<Integer> rafraichitActions() {
+        List<Integer> listeIdActions = new ArrayList<Integer>();
+        listeIdActions.add(Action.PASSE.getIdAction()); // on peut toujours passer son tour
+        if (peutAcheterRoute()) {
+            listeIdActions.add(Action.ROUTE.getIdAction());
+        }
+        if (peutAcheterColonie()) {
+            listeIdActions.add(Action.COLONIE.getIdAction());
+        }
+        return listeIdActions;
+    }
+
+    public void afficheActions(List<Integer> listeIdActions) {
+        for (Integer i = 0; i < listeIdActions.size(); i++) {
+            console.println(getCouleur().getStylo(), Action.getActionParId(listeIdActions.get(i)).getIdAction() + " " + Action.getActionParId(listeIdActions.get(i)).getLibelleAction());
+        }
+    }
+
+    public Boolean lanceAction(Integer actionChoisie, Jeu jeu) {
+        if (actionChoisie == Action.PASSE.getIdAction()) {
             return true; // on passe son tour donc on arrete le do/while de joue()
         }
-        if (actionChoisie == 1) {
-            lanceAchatRoute();
+        if (actionChoisie == Action.ROUTE.getIdAction()) {
+            lanceAchatRoute(jeu);
+        }
+        if (actionChoisie == Action.COLONIE.getIdAction()) {
+            lanceAchatColonie(jeu);
         }
         return false; // a part si on a passe son tour (0) on peut choisir une nouvelle action
     }
 
-    private void lanceAchatRoute() {
+    public void lanceAchatRoute(Jeu jeu) {
+        Integer idPointA, idPointB, idPointPassage;
+        console.aLaLigne();
 
+        console.println(getCouleur().getMarqueur(), "Achat d'une route");
+        if (!peutAcheterRoute()) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, vous ne pouvez pas acheter de route");
+            return;
+        }
+
+        idPointA = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez le point de DEPART : ");
+        idPointB = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez le point d'ARRIVEE : ");
+        if (idPointA > idPointB) {
+            idPointPassage = idPointB;
+            idPointB = idPointA;
+            idPointA = idPointPassage;
+        }
+        if (!jeu.getPlateau().isSegmentValide(idPointA, idPointB)) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, cette route n'est pas valide");
+            return;
+        }
+
+        if (jeu.getPlateau().getProprietaireSegment(idPointA, idPointB) == null) {
+            acheteRoute(jeu.getPlateau(), new Segment(idPointA, idPointB, null));
+            return;
+        }
+        else
+        {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, cette route est déjà occupée");
+            return;
+        }
+    }
+
+    public void lanceAchatColonie(Jeu jeu) {
+        Integer idPoint;
+        console.aLaLigne();
+        console.println(getCouleur().getMarqueur(), "Achat d'une colonie");
+        if (!peutAcheterColonie()) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, vous ne pouvez pas acheter de colonie");
+            return;
+        }
+
+        idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez l'emplacement de la colonie : ");
+        if (idPoint < 0 || idPoint >= jeu.getPlateau().getPoints().size()) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, ce croisement n'est pas valide");
+            return;
+        }
+
+        if (jeu.getPlateau().getPoints().get(idPoint).getProprietaire() == null) {
+            acheteColonie(jeu.getPlateau(), jeu.getPlateau().getPoints().get(idPoint));
+            return;
+        }
+        else
+        {
+            console.println(Couleur.MAUVE.getMarqueur(), "Erreur, cette colonie est déjà occupée");
+            return;
+        }
     }
 
     public void choisiSegmentDepart(Jeu jeu) {

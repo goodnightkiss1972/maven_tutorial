@@ -100,4 +100,40 @@ public class JeuScenarioUTest {
         jeu.getPlateau().dessinePlateau();
     }
 
+    @Test
+    public void scenarioJeu02PlacementCorrect() {
+        assertThat(jeu.placeSegmentDepart(new Segment(7, 8, null), joueurs.get(0))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(7), joueurs.get(0))).isTrue();
+        assertThat(jeu.placeSegmentDepart(new Segment(9, 10, null), joueurs.get(1))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(9), joueurs.get(1))).isTrue();
+        assertThat(jeu.placeSegmentDepart(new Segment(8, 14, null), joueurs.get(2))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(14), joueurs.get(2))).isTrue();
+
+        assertThat(jeu.placeSegmentDepart(new Segment(19, 20, null), joueurs.get(2))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(19), joueurs.get(2))).isTrue();
+        assertThat(jeu.placeSegmentDepart(new Segment(22, 28, null), joueurs.get(1))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(28), joueurs.get(1))).isTrue();
+        assertThat(jeu.placeSegmentDepart(new Segment(19, 25, null), joueurs.get(0))).isTrue();
+        assertThat(jeu.placePointDepart(jeu.getPlateau().getPoints().get(25), joueurs.get(0))).isTrue();
+
+        jeu.getPlateau().production(3);
+        jeu.getPlateau().production(5);
+        jeu.getPlateau().production(7);
+
+        assertThat(joueurs.get(0).getListeIdActions()).containsOnly(Action.PASSE.getIdAction());
+
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+
+        assertThat(joueurs.get(1).acheteRoute(jeu.getPlateau(), new Segment(27, 28, null))).isTrue();
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+
+        assertThat(joueurs.get(1).acheteRoute(jeu.getPlateau(), new Segment(26, 27, null))).isTrue();
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+
+        assertThat(joueurs.get(1).acheteColonie(jeu.getPlateau(), jeu.getPlateau().getPoints().get(26))).isTrue();
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction());
+
+        jeu.getPlateau().dessinePlateau();
+        jeu.dessineInventaire();
+    }
 }
