@@ -214,9 +214,11 @@ public class Joueur {
     }
 
     public void joue(Jeu jeu) {
-        console.aLaLigne();
         Boolean action;
         do {
+            console.effaceTout();
+            jeu.getPlateau().dessinePlateau();
+            jeu.dessineInventaire();
             console.println(getCouleur().getStylo(), getNom() + " choisissez une action :");
             afficheActions(getListeIdActions());
             action = lanceAction(dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Votre choix : ", getListeIdActions()), jeu);
@@ -256,8 +258,6 @@ public class Joueur {
 
     public void lanceAchatRoute(Jeu jeu) {
         Integer idPointA, idPointB, idPointPassage;
-        console.aLaLigne();
-
         console.println(getCouleur().getMarqueur(), "Achat d'une route");
         if (!peutAcheterRoute()) {
             console.println(Couleur.MAUVE.getMarqueur(), "Erreur, vous ne pouvez pas acheter de route");
@@ -289,7 +289,6 @@ public class Joueur {
 
     public void lanceAchatColonie(Jeu jeu) {
         Integer idPoint;
-        console.aLaLigne();
         console.println(getCouleur().getMarqueur(), "Achat d'une colonie");
         if (!peutAcheterColonie()) {
             console.println(Couleur.MAUVE.getMarqueur(), "Erreur, vous ne pouvez pas acheter de colonie");
