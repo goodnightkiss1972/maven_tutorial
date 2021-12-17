@@ -340,10 +340,13 @@ public class Plateau {
             console.println(Couleur.MAUVE.getStylo(), "Aucun gain de ressource...");
             return;
         }
-        for (Integer tuile = 0; tuile < tuilesTirees.size(); tuile++) {
-            for (Integer pointsVoisins = 0; pointsVoisins < 4; pointsVoisins++) {
-                //System.out.println(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
-                credite(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
+        else {
+            console.println(Couleur.MAUVE.getStylo(), "Des joueurs gagnent des ressources...");
+            for (Integer tuile = 0; tuile < tuilesTirees.size(); tuile++) {
+                for (Integer pointsVoisins = 0; pointsVoisins < 4; pointsVoisins++) {
+                    //System.out.println(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
+                    credite(points.get(tuilesTirees.get(tuile).getPointsVoisins().get(pointsVoisins)).getIdPoint());
+                }
             }
         }
     }
