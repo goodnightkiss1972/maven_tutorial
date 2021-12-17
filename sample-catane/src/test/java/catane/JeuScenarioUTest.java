@@ -133,6 +133,14 @@ public class JeuScenarioUTest {
         assertThat(joueurs.get(1).acheteColonie(jeu.getPlateau(), jeu.getPlateau().getPoints().get(26))).isTrue();
         assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction());
 
+        jeu.getPlateau().production(3);
+        jeu.getPlateau().production(5);
+        jeu.getPlateau().production(7);
+
+        assertThat(joueurs.get(1).acheteVille(jeu.getPlateau(), jeu.getPlateau().getPoints().get(26))).isTrue();
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+
+
         jeu.getPlateau().dessinePlateau();
         jeu.dessineInventaire();
     }

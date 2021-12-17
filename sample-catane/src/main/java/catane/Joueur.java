@@ -167,11 +167,11 @@ public class Joueur {
     }
     
     public boolean peutAcheterRoute() {
-        if (getInventaireArgile() < 1 || getInventaireBois() < 1) {
-            return false;
+        if (getInventaireArgile() >= 1 && getInventaireBois() >= 1) {
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
     
@@ -187,26 +187,74 @@ public class Joueur {
     }
 
     public boolean peutAcheterColonie() {
-        if (getInventaireArgile() < 1 || getInventaireBois() < 1 || getInventaireLaine() < 1 || getInventaireMinerai() < 1) {
-            return false;
+        if (getInventaireArgile() >= 1 && getInventaireBois() >= 1 && getInventaireLaine() >= 1 && getInventaireMinerai() >= 1) {
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
 
     public boolean acheteColonie(Plateau plateau, Point point) {
-        if (peutAcheterColonie() == true && point.getProprietaire() == null && point.peutBatirPourUnJoueur(point, plateau, this)) {
-            point.setProprietaire(this);
-            point.setTypePoint(TypePoint.COLONIE);
-            changeInventaire(-1, Production.ARGILE);
-            changeInventaire(-1, Production.BOIS);
-            changeInventaire(-1, Production.LAINE);
-            changeInventaire(-1, Production.MINERAI);
-            ajoutePoints(1);
+        if (peutAcheterColonie() == false) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Vous n'avez pas assez de ressources pour acheter une colonie");
+            return false;
+        }
+        if (!(point.getProprietaire() == null)) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement est deja occupe");
+            return false;
+        }
+        if (!(point.peutBatirPourUnJoueur(point, plateau, this))) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement n'est pas disponible");
+            return false;
+        }
+        point.setProprietaire(this);
+        point.setTypePoint(TypePoint.COLONIE);
+        changeInventaire(-1, Production.ARGILE);
+        changeInventaire(-1, Production.BOIS);
+        changeInventaire(-1, Production.LAINE);
+        changeInventaire(-1, Production.MINERAI);
+        ajoutePoints(1);
+        return true;
+    }
+
+    public boolean peutAcheterVille() {
+        if (getInventaireBle() >= 2 && getInventaireMinerai() >= 3) {
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
+    }
+
+    public boolean acheteVille(Plateau plateau, Point point) {
+        if (peutAcheterVille() == false) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Vous n'avez pas assez de ressources pour acheter une ville");
+            return false;
+        }
+        if (point.getProprietaire() == null) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Vous ne possedez pas de colonie a cet emplacement");
+            return false;
+        }
+        if (point.getProprietaire() != this) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement est deja occupe");
+            return false;
+        }
+        if (!(point.peutBatirPourUnJoueur(point, plateau, this))) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement n'est pas disponible");
+            return false;
+        }
+        if (point.getTypePoint() == TypePoint.VILLE) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Une ville vous appartenant existe deja a cet emplacement");
+            return false;
+
+        }
+        point.setProprietaire(this);
+        point.setTypePoint(TypePoint.VILLE);
+        changeInventaire(-2, Production.BLE);
+        changeInventaire(-3, Production.MINERAI);
+        ajoutePoints(1);
+        return true;
     }
 
     public String getNom() {
@@ -234,6 +282,9 @@ public class Joueur {
         if (peutAcheterColonie()) {
             listeIdActions.add(Action.COLONIE.getIdAction());
         }
+        if (peutAcheterVille()) {
+            listeIdActions.add(Action.VILLE.getIdAction());
+        }
         return listeIdActions;
     }
 
@@ -252,6 +303,9 @@ public class Joueur {
         }
         if (actionChoisie == Action.COLONIE.getIdAction()) {
             lanceAchatColonie(jeu);
+        }
+        if (actionChoisie == Action.VILLE.getIdAction()) {
+            lanceAchatVille(jeu);
         }
         return false; // a part si on a passe son tour (0) on peut choisir une nouvelle action
     }
@@ -310,6 +364,12 @@ public class Joueur {
             console.println(Couleur.MAUVE.getMarqueur(), "Erreur, cette colonie est déjà occupée");
             return;
         }
+    }
+
+    public void lanceAchatVille(Jeu jeu) {
+        console.println(getCouleur().getMarqueur(), "Achat d'une colonie");
+        Integer idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez l'emplacement de la colonie : ");
+        acheteVille(jeu.getPlateau(), jeu.getPlateau().getPoints().get(idPoint));
     }
 
     public void choisiSegmentDepart(Jeu jeu) {
