@@ -120,15 +120,15 @@ public class JeuScenarioUTest {
         jeu.getPlateau().production(5);
         jeu.getPlateau().production(7);
 
-        assertThat(joueurs.get(0).getListeIdActions()).containsOnly(Action.PASSE.getIdAction());
+        assertThat(joueurs.get(0).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.COMMERCE4.getIdAction());
 
-        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction(), Action.COMMERCE4.getIdAction());
 
         assertThat(joueurs.get(1).acheteRoute(jeu.getPlateau(), new Segment(27, 28, null))).isTrue();
-        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction(), Action.COMMERCE4.getIdAction());
 
         assertThat(joueurs.get(1).acheteRoute(jeu.getPlateau(), new Segment(26, 27, null))).isTrue();
-        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction(), Action.COMMERCE4.getIdAction());
 
         assertThat(joueurs.get(1).acheteColonie(jeu.getPlateau(), jeu.getPlateau().getPoints().get(26))).isTrue();
         assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction());
@@ -138,7 +138,7 @@ public class JeuScenarioUTest {
         jeu.getPlateau().production(7);
 
         assertThat(joueurs.get(1).acheteVille(jeu.getPlateau(), jeu.getPlateau().getPoints().get(26))).isTrue();
-        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction());
+        assertThat(joueurs.get(1).getListeIdActions()).containsOnly(Action.PASSE.getIdAction(), Action.ROUTE.getIdAction(), Action.COLONIE.getIdAction(), Action.COMMERCE4.getIdAction());
 
 
         jeu.getPlateau().dessinePlateau();

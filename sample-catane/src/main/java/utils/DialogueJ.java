@@ -91,4 +91,9 @@ public class DialogueJ {
         } while (erreurDetectee == true);
         return null;
     }
+
+    public void demandeUneTouche() {
+        console.println(AnsiColors.ANSI_PURPLE, "Veuillez appuyer sur ENTREE");
+        scanner.nextLine();
+    }
 }

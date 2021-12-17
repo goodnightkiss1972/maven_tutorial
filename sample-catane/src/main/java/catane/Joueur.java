@@ -22,6 +22,7 @@ public class Joueur {
     Integer inventaireBle;
     Integer inventaireMinerai;
     List<Integer> listeIdActions = new ArrayList<>();
+    List<Integer> listeProductionCommerce4 = new ArrayList<>();
 
     ConsoleJ console = new ConsoleJ();
     DialogueJ dialogue = new DialogueJ();
@@ -49,6 +50,13 @@ public class Joueur {
         this.listeIdActions = rafraichitActions();
     }
 
+    public List<Integer> getListeProductionCommerce4() {
+        return rafraichitProductionCommerce4();
+    }
+
+    public void setListeProductionCommerce4(List<Integer> listeProductionCommerce4) {
+        this.listeProductionCommerce4 = rafraichitProductionCommerce4();
+    }
 
     public Integer getPoints() {
         return points;
@@ -158,6 +166,58 @@ public class Joueur {
         }
     }
 
+    public Boolean peutCommercer4Bois() {
+        if (getInventaireBois() >= 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean peutCommercer4Argile() {
+        if (getInventaireArgile() >= 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean peutCommercer4Laine() {
+        if (getInventaireLaine() >= 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean peutCommercer4Ble() {
+        if (getInventaireBle() >= 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean peutCommercer4Minerai() {
+        if (getInventaireMinerai() >= 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean peutCommercer4() {
+        if (peutCommercer4Bois() || peutCommercer4Argile() || peutCommercer4Laine() || peutCommercer4Ble() || peutCommercer4Minerai()) {
+            return true;
+        }
+        return false;
+    }
+
     public Couleur getCouleur() {
         return couleur;
     }
@@ -230,22 +290,27 @@ public class Joueur {
     public boolean acheteVille(Plateau plateau, Point point) {
         if (peutAcheterVille() == false) {
             console.println(Couleur.MAUVE.getMarqueur(), "Vous n'avez pas assez de ressources pour acheter une ville");
+            dialogue.demandeUneTouche();
             return false;
         }
         if (point.getProprietaire() == null) {
             console.println(Couleur.MAUVE.getMarqueur(), "Vous ne possedez pas de colonie a cet emplacement");
+            dialogue.demandeUneTouche();
             return false;
         }
         if (point.getProprietaire() != this) {
             console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement est deja occupe");
+            dialogue.demandeUneTouche();
             return false;
         }
         if (!(point.peutBatirPourUnJoueur(point, plateau, this))) {
             console.println(Couleur.MAUVE.getMarqueur(), "Cet emplacement n'est pas disponible");
+            dialogue.demandeUneTouche();
             return false;
         }
         if (point.getTypePoint() == TypePoint.VILLE) {
             console.println(Couleur.MAUVE.getMarqueur(), "Une ville vous appartenant existe deja a cet emplacement");
+            dialogue.demandeUneTouche();
             return false;
 
         }
@@ -285,6 +350,9 @@ public class Joueur {
         if (peutAcheterVille()) {
             listeIdActions.add(Action.VILLE.getIdAction());
         }
+        if (peutCommercer4()) {
+            listeIdActions.add(Action.COMMERCE4.getIdAction());
+        }
         return listeIdActions;
     }
 
@@ -307,7 +375,26 @@ public class Joueur {
         if (actionChoisie == Action.VILLE.getIdAction()) {
             lanceAchatVille(jeu);
         }
+        if (actionChoisie == Action.COMMERCE4.getIdAction()) {
+            lanceCommerce4(jeu);
+        }
         return false; // a part si on a passe son tour (0) on peut choisir une nouvelle action
+    }
+
+    public void choisiSegmentDepart(Jeu jeu) {
+        Integer idPointA, idPointB;
+        do {
+        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une route gratuitement...");
+        idPointA = dialogue.demandeEntier(getCouleur().getStylo(), "Point de depart : ");
+        idPointB = dialogue.demandeEntier(getCouleur().getStylo(), "Point d'arrivee : ");
+        } while (jeu.placeSegmentDepart(new Segment(idPointA, idPointB, null), this) == false);
+    }
+
+    public void choisiColonieDepart(Jeu jeu) {
+        Integer idPoint;
+        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une colonie gratuitement...");
+        idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Colonie : ");
+        jeu.placePointDepart(jeu.getPlateau().getPoints().get(idPoint), this);
     }
 
     public void lanceAchatRoute(Jeu jeu) {
@@ -367,25 +454,62 @@ public class Joueur {
     }
 
     public void lanceAchatVille(Jeu jeu) {
-        console.println(getCouleur().getMarqueur(), "Achat d'une colonie");
-        Integer idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez l'emplacement de la colonie : ");
+        console.println(getCouleur().getMarqueur(), "Achat d'une ville");
+        Integer idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Entrez l'emplacement de la ville : ");
         acheteVille(jeu.getPlateau(), jeu.getPlateau().getPoints().get(idPoint));
     }
 
-    public void choisiSegmentDepart(Jeu jeu) {
-        Integer idPointA, idPointB;
-        do {
-        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une route gratuitement...");
-        idPointA = dialogue.demandeEntier(getCouleur().getStylo(), "Point de depart : ");
-        idPointB = dialogue.demandeEntier(getCouleur().getStylo(), "Point d'arrivee : ");
-        } while (jeu.placeSegmentDepart(new Segment(idPointA, idPointB, null), this) == false);
+    public List<Integer> rafraichitProductionCommerce4() {
+        List<Integer> liste = new ArrayList<Integer>();
+        if (peutCommercer4Bois()) {
+            liste.add(Production.BOIS.getIdProduction());
+        }
+        if (peutCommercer4Argile()) {
+            liste.add(Production.ARGILE.getIdProduction());
+        }
+        if (peutCommercer4Laine()) {
+            liste.add(Production.LAINE.getIdProduction());
+        }
+        if (peutCommercer4Ble()) {
+            liste.add(Production.BLE.getIdProduction());
+        }
+        if (peutCommercer4Minerai()) {
+            liste.add(Production.MINERAI.getIdProduction());
+        }
+        liste.add(Production.RIEN.getIdProduction()); // on peut toujours ne rien echanger :-)
+        return liste;
     }
 
-    public void choisiColonieDepart(Jeu jeu) {
-        Integer idPoint;
-        console.println(getCouleur().getMarqueur(), getNom() + " choisissez une colonie gratuitement...");
-        idPoint = dialogue.demandeEntier(getCouleur().getStylo(), "Colonie : ");
-        jeu.placePointDepart(jeu.getPlateau().getPoints().get(idPoint), this);
+    public void afficheProduction(List<Integer> listeIdProductions) {
+        for (Integer i = 0; i < listeIdProductions.size(); i++) {
+            console.println(getCouleur().getStylo(), "  " + Production.getProductionParId(listeIdProductions.get(i)).getIdProduction() + " " + Production.getProductionParId(listeIdProductions.get(i)).getLibelleProduction());
+        }
+    }
+
+    public void lanceCommerce4(Jeu jeu) {
+        afficheProduction(getListeProductionCommerce4());
+        Integer productionProposee = dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Saisissez la ressource a echanger : ", getListeProductionCommerce4());
+
+        List<Integer> listeIdEnumProduction = new ArrayList<>();
+        listeIdEnumProduction.add(0);
+        listeIdEnumProduction.add(1);
+        listeIdEnumProduction.add(2);
+        listeIdEnumProduction.add(3);
+        listeIdEnumProduction.add(4);
+        listeIdEnumProduction.add(99);
+        afficheProduction(listeIdEnumProduction);
+        Integer productionSouhaitee = dialogue.demandeEntierPrecis(getCouleur().getStylo(), "Saisissez la ressource souhaitee en echange : ", listeIdEnumProduction);
+
+        if (productionProposee == productionSouhaitee || productionProposee == 99 || productionSouhaitee == 99) {
+            console.println(Couleur.MAUVE.getMarqueur(), "Abandon de l'echange...");
+            dialogue.demandeUneTouche();
+            return;
+        }
+        else {
+            changeInventaire(-4, Production.getProductionParId(productionProposee));
+            changeInventaire(1, Production.getProductionParId(productionSouhaitee));
+        }
+
     }
 
 }

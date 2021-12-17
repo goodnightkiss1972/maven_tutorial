@@ -64,14 +64,18 @@ public class Jeu {
 
     public void initialiseJeu() {
         for (Integer i = 0; i < joueurs.size(); i++) {
+            console.effaceTout();
             getPlateau().dessinePlateau();
             joueurs.get(i).choisiSegmentDepart(this);
+            console.effaceTout();
             getPlateau().dessinePlateau();
             joueurs.get(i).choisiColonieDepart(this);
         }
         for (Integer i = joueurs.size() -1; i >= 0; i--) {
+            console.effaceTout();
             getPlateau().dessinePlateau();
             joueurs.get(i).choisiSegmentDepart(this);
+            console.effaceTout();
             getPlateau().dessinePlateau();
             joueurs.get(i).choisiColonieDepart(this);
         }
@@ -82,8 +86,8 @@ public class Jeu {
             Joueur j = joueurs.get(i);
             console.print(j.getCouleur().getMarqueur(), j.getNom());
             console.print(j.getCouleur().getStylo(), " " + j.getPoints() + " pts");
-            console.print(j.getCouleur().getStylo(), " / Argile = " + j.getInventaireArgile());
             console.print(j.getCouleur().getStylo(), " / Bois = " + j.getInventaireBois());
+            console.print(j.getCouleur().getStylo(), " / Argile = " + j.getInventaireArgile());
             console.print(j.getCouleur().getStylo(), " / Laine = " + j.getInventaireLaine());
             console.print(j.getCouleur().getStylo(), " / Ble = " + j.getInventaireBle());
             console.print(j.getCouleur().getStylo(), " / Minerai = " + j.getInventaireMinerai());
